@@ -10,7 +10,6 @@
     "frontend": "webpack -d --watch",
     "webpack": "webpack-dev-server --content-base build/",
     "backend": "nodemon server.js",
-    "postinstall": "db-migrate up",
     "start": "NODE_ENV=production node server.js",
     "test": "mocha --compilers js:babel-core/register ./test/**/*.js --require ignore-styles"
   },
