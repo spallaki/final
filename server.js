@@ -10,7 +10,7 @@ const LocalStrategy = require('passport-local');
 const session = require('express-session');
 
 const auth = require('./backend/auth');
-const routes = require('./backened/routes');
+const routes = require('./backend/routes');
 const db = require('./pool.js');
 
 const PORT = process.env.PORT || 3000;
