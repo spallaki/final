@@ -48,7 +48,7 @@ module.exports = function(passport, db) {
           .then((result) => res.json({success: true, user: result}))
         }
       })
-      .catch((err) => res.json({success: false, error: err});
+      .catch((err) => res.json({success: false, error: err}));
   })
 
   return router;
