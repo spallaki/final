@@ -17,6 +17,8 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: process.env.SECRET || 'h0r1z0n5'}))
+app.use(bodyParser())
+app.use(bodyParser.urlencoded({extended: false}))
 
 // app.get('/', (req, res) => {
 //   res.sendFile(__dirname + '/public/index.html'); // For React/Redux
