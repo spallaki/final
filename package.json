@@ -11,7 +11,8 @@
     "webpack": "webpack-dev-server --content-base build/",
     "backend": "nodemon server.js",
     "start": "NODE_ENV=production node server.js",
-    "test": "mocha --compilers js:babel-core/register ./test/**/*.js --require ignore-styles"
+    "test": "mocha --compilers js:babel-core/register ./test/**/*.js --require ignore-styles",
+    "migrateup": "db-migrate up -c 4"
   },
   "author": "",
   "license": "ISC",
