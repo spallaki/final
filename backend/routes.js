@@ -12,6 +12,7 @@ module.exports = function(db) {
 //expiration date, pharmacy, pharmacy phone, fk_user_id
 
 router.post('/addrx', (req, res) => {
+  console.log('hello');
   var prescriptionName = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
   // var physician = req.body.physician.charAt(0).toUpperCase() + req.body.name.slice(1);
   var received = req.body.received || null;
