@@ -21,7 +21,7 @@ module.exports = function(passport, db) {
       } else {
         req.logIn(user, err => {
           if (err) {
-            res.json({success: false})
+            res.json({success: false, error: err})
           } else {
             res.json({success: true, user: user});
           };
@@ -48,7 +48,7 @@ module.exports = function(passport, db) {
           .then((result) => res.json({success: true, user: result}))
         }
       })
-      .catch((err) => res.json({success: false, error: err}));
+      .catch((error) => res.json({success: false, error: error}));
   })
 
   return router;

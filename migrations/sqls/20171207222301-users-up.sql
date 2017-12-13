@@ -1,9 +1,9 @@
 /* Replace with your SQL commands */
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR,
-  password VARCHAR,
-  firstName VARCHAR,
-  lastName VARCHAR,
-  email VARCHAR
+  username VARCHAR NOT NULL,
+  password VARCHAR NOT NULL,
+  firstName VARCHAR NOT NULL,
+  lastName VARCHAR NOT NULL,
+  email VARCHAR NOT NULL
 );
