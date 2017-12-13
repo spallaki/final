@@ -12,7 +12,6 @@ module.exports = function(db) {
 //expiration date, pharmacy, pharmacy phone, fk_user_id
 
 router.post('/addrx', (req, res) => {
-  console.log('hello');
   var prescriptionName = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
   // var physician = req.body.physician.charAt(0).toUpperCase() + req.body.name.slice(1);
   var received = req.body.received || null;
@@ -20,7 +19,10 @@ router.post('/addrx', (req, res) => {
   db.query('INSERT INTO prescriptions (name, physician, dosage, quantity, type, rx_number, refills, received, expiration_date, pharmacy, pharmacy_phone, fk_user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
   [prescriptionName, req.body.physician, req.body.dosage, req.body.quantity, req.body.type, req.body.rx_number, req.body.refills, received, expiration_date, req.body.pharmacy, req.body.pharmacy_phone, req.user.id])
   .then((result) => res.json({success: true}))
-  .catch((error) => res.json({success: false, error: error}))
+  .catch((error) => {
+    console.log("the error here", error);
+    res.json({success: false, error: error})
+  })
 })
 
 router.post('/addnote', (req, res) => {
