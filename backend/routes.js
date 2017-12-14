@@ -11,6 +11,10 @@ module.exports = function(db) {
 //id, name, physician, dosage, quantity, type, rx number, refills, received,
 //expiration date, pharmacy, pharmacy phone, fk_user_id
 
+router.post('/addpicture', (req, res) => {
+  db.query('UPDATE users SET profile_pic = $1 WHERE id = $2', [req.body.user_URI, req.user.id])
+})
+
 router.post('/addrx', (req, res) => {
   var prescriptionName = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
   // var physician = req.body.physician.charAt(0).toUpperCase() + req.body.name.slice(1);
@@ -25,7 +29,7 @@ router.post('/addrx', (req, res) => {
   })
 })
 
-router.post('/addnote', (req, res) => {
+router.post('/addNote', (req, res) => {
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth() + 1;
@@ -67,5 +71,6 @@ router.post('/getRx/:id', (req, res) => {
 router.post('/updateRx', (req, res) => {
 
 })
+
 return router;
 }

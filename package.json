@@ -12,7 +12,8 @@
     "backend": "nodemon server.js",
     "start": "NODE_ENV=production node server.js",
     "test": "mocha --compilers js:babel-core/register ./test/**/*.js --require ignore-styles",
-    "migrateup": "db-migrate up -c 4"
+    "migrateup": "db-migrate up -c 4",
+    "migratedown": "db-migrate down -c 4"
   },
   "author": "",
   "license": "ISC",
