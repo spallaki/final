@@ -36,8 +36,10 @@ module.exports = function(passport, db) {
   // }));
 
   router.post('/register', (req, res) => {
+    console.log(req.body, 'register req body');
     db.query('SELECT * FROM users WHERE username = $1', [req.body.username])
       .then((result) => {
+        console.log('succeeded firat query', result);
         if (result.rows.length > 0) {
           res.json({success: false, error: 'Username already exists'})
         } else if (req.body.password !== req.body.password2) {

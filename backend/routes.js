@@ -44,7 +44,7 @@ router.post('/addNote', (req, res) => {
   }
   today = mm + '/' + dd + '/' + yyyy;
 
-  db.query('INSERT INTO notes VALUES($1, $2),' [today, req.body.noteBody])
+  db.query('INSERT INTO notes VALUES($1, $2, $3),' [today, req.body.noteBody, req.body.id])
   .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 });
@@ -80,7 +80,6 @@ router.post('/updateRx', (req, res) => {
   //check what req.body has
   //if req.body has something new, it'll update particular parts
   //switch statement
-
 })
 
 router.post('/updateNote', (req, res) => {
