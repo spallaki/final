@@ -11,11 +11,13 @@ module.exports = function(db) {
 //id, name, physician, dosage, quantity, type, rx number, refills, received,
 //expiration date, pharmacy, pharmacy phone, fk_user_id
 
-router.post('/addpicture', (req, res) => {
+router.post('/addPicture', (req, res) => {
   db.query('UPDATE users SET profile_pic = $1 WHERE id = $2', [req.body.user_URI, req.user.id])
+  .then((result) => res.json({success: true}))
+  .catch((error) => res.json({success: false, error: error}))
 })
 
-router.post('/addrx', (req, res) => {
+router.post('/addRx', (req, res) => {
   var prescriptionName = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
   // var physician = req.body.physician.charAt(0).toUpperCase() + req.body.name.slice(1);
   var received = req.body.received || null;
@@ -42,8 +44,8 @@ router.post('/addNote', (req, res) => {
   }
   today = mm + '/' + dd + '/' + yyyy;
 
-  db.query('INSERT INTO notes VALUES($1, $2, $3),' [today, req.body.noteBody, req.body.id])
-  .then((result) => res.json({success: true, result: result.rows}))
+  db.query('INSERT INTO notes VALUES($1, $2),' [today, req.body.noteBody])
+  .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 });
 
@@ -54,12 +56,6 @@ router.post('/getAllRx', (req, res) => {
   // console.log(req.user)
 });
 
-router.post('/day', (req, res) => {
-  db.query('SELECT p.name, r.day, r.set_time FROM prescriptions p JOIN users u on p.fk_user_id = u.id JOIN reminders r on r.fk_prescription_id = p.id WHERE p.fk_user_id = $1', [req.user.id])
-  .then((result) => res.json({success: true, result: result.rows}))
-  .catch((error) => res.json({success: false, error: error}))
-});
-
 router.post('/getRx/:id', (req, res) => {
   db.query('SELECT * FROM prescriptions WHERE id = $1', [req.params.id])
   .then((result) => res.json({success: true, result: result.rows}))
@@ -68,7 +64,26 @@ router.post('/getRx/:id', (req, res) => {
   //once you click on the prescription, it can access the id and will use the /getrx/:id route
 });
 
+router.post('/getProfile', (req, res) => {
+  db.query('SELECT firstName, lastName, profile_pic FROM users WHERE id=$1', [req.user.id])
+  .then((result) => res.json({success: true, result: result.rows}))
+  .catch((error) => res.json({success: false, error: error}))
+})
+
+router.post('/day', (req, res) => {
+  db.query('SELECT p.name, r.day, r.set_time FROM prescriptions p JOIN users u on p.fk_user_id = u.id JOIN reminders r on r.fk_prescription_id = p.id WHERE p.fk_user_id = $1', [req.user.id])
+  .then((result) => res.json({success: true, result: result.rows}))
+  .catch((error) => res.json({success: false, error: error}))
+});
+
 router.post('/updateRx', (req, res) => {
+  //check what req.body has
+  //if req.body has something new, it'll update particular parts
+  //switch statement
+
+})
+
+router.post('/updateNote', (req, res) => {
 
 })
 
