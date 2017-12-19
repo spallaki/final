@@ -53,10 +53,10 @@ router.post('/getAllRx', (req, res) => {
   db.query(`SELECT
       *
     FROM prescriptions p
-    LEFT JOIN notes n ON (p.id = n.fk_prescription_id) 
+    LEFT JOIN notes n ON (p.id = n.fk_prescription_id)
     WHERE fk_user_id = $1`,
     [req.user.id])
-  .then((result) => res.json({success: true, result: result}))
+  .then((result) => res.json({success: true, result: result.rows}))
   .catch((error) => res.json({success: false, error: error}))
   // console.log(req.user)
 });
