@@ -20,6 +20,7 @@ router.post('/addPicture', (req, res) => {
 })
 
 router.post('/addRx', (req, res) => {
+  console.log(req.body.name)
   var prescriptionName = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
   // var physician = req.body.physician.charAt(0).toUpperCase() + req.body.name.slice(1);
   var received = req.body.received || null;

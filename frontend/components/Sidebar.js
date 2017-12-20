@@ -10,7 +10,7 @@ export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
       this.state = {
-        image: 'https://www.petmd.com/sites/default/files/petmd-cat-happy-13.jpg'
+        image: ''
       };
   }
 

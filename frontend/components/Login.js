@@ -96,7 +96,7 @@ class Login extends React.Component {
           username: this.state.username,
           password: this.state.password
         }))
-        .then(() => this.props.navigation.navigate('PillCard'))
+        .then(() => this.props.navigation.navigate('Calendar'))
       } else {
         this.setState({error: 'error'});
       }

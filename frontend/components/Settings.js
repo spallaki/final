@@ -5,6 +5,7 @@ import { Header } from 'react-native-elements';
 import RXHeader from '../components/RXHeader.js';
 import { Drawer } from 'native-base';
 import Sidebar from './Sidebar';
+import ProfileImage from './ProfileImage';
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
@@ -45,7 +46,7 @@ export default class Settings extends React.Component {
           />}
           onClose={() => this.closeDrawer()} >
         <RXHeader currentScreen={'Settings'} openDrawer={this.openDrawer} />
-        {/* <ProfileImage /> */}
+        <ProfileImage />
         <Text style={{fontSize: 34, color: 'white', fontFamily: 'HelveticaNeue-Light', paddingTop: 10, alignSelf: 'center'}}>Account</Text>
         <View style={styles.profilepic}></View>
         <View style={{justifyContent: 'center', alignItems: 'center', bottom: 200}}>

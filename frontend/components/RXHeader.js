@@ -114,43 +114,43 @@ export default class RXHeader extends Component {
                   <Form>
                     <Item style={{padding: 0}} floatingLabel>
                       <Label >Name</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({name: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Rx Number</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({rx_number: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Physician</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({physician: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Pharmacy</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({pharmacy: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Pharmacy Phone #</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({pharmacy_phone: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Date Recieved</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({received: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Expiration</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({expiration_date: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Refills Left</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({refills: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Quantity</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({quantity: text})}/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Type (eg. tablet, capsule)</Label>
-                      <Input />
+                      <Input onChangeText={(text) => this.setState({type: text})}/>
                     </Item>
                   </Form>
                   <Button onPress={ () => {this.addRx2press()} } style={{marginLeft: 140, marginTop: 20, marginBottom: 20, backgroundColor: '#00adf5'}}><Text>Add</Text></Button>
