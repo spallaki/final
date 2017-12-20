@@ -1,29 +1,34 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import { connect } from 'react-redux';
-// import App from '../components/App';
+import { View, Text, StyleSheet } from 'react-native';
+// import { connect } from 'react-redux';
+import { StackNavigator } from 'react-navigation';
+import Login from '../components/Login.js';
+import Register from '../components/Register.js';
+import Med from '../components/Med.js';
+import Settings from '../components/Settings.js';
+import PillCard from '../components/PillCard.js';
+import BackHeader from '../components/BackHeader.js';
+// import Sidebar from '../components/Sidebar.js';
 
-const AppContainer = ({ name }) => {
+const AppContainer = ({  }) => {
   return (
-    <View>
-      {/* <App name={name} /> */}
-      <Text>{name} Sup</Text>
+    <View style={styles.container}>
+      <Login />
     </View>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    name: state.name
-  };
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
 
-const mapDispatchToProps = (/* dispatch */) => {
-  return {
-  };
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AppContainer);
+export default App = StackNavigator({
+  Login: {screen: Login},
+  Register: {screen: Register},
+  Med: {screen: Med},
+  Settings: {screen: Settings},
+  PillCard: {screen: PillCard},
+  BackHeader: {screen: BackHeader},
+});
