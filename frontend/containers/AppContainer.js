@@ -1,32 +1,23 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { View, Text, StyleSheet } from 'react-native';
 // import { connect } from 'react-redux';
-import Calendar from '../components/Calendar.js';
-import Sidebar from '../components/Sidebar.js';
-import Settings from '../components/Settings.js';
+import { StackNavigator } from 'react-navigation';
 import Login from '../components/Login.js';
+import Calendar from '../components/Calendar.js';
+import Register from '../components/Register.js';
+import Med from '../components/Med.js';
+import Settings from '../components/Settings.js';
+import PillCard from '../components/PillCard.js';
+import BackHeader from '../components/BackHeader.js';
+// import Sidebar from '../components/Sidebar.js';
 
-// const AppContainer = ({ }) => {
-//   return (
-//     <View
-//       style={styles.container}
-//       >
-//       <Calendar />
-//     </View>
-//   );
-// };
-
-// const mapStateToProps = (state) => {
-//   return {
-//     name: state.name
-//   };
-// };
-//
-// const mapDispatchToProps = (/* dispatch */) => {
-//   return {
-//   };
-// };
+const AppContainer = ({  }) => {
+  return (
+    <View style={styles.container}>
+      <Login />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -35,11 +26,11 @@ const styles = StyleSheet.create({
 });
 
 export default App = StackNavigator({
+  Login: {screen: Login},
+  Register: {screen: Register},
   Calendar: {screen: Calendar},
-  Settings: {screen: Settings}
+  Med: {screen: Med},
+  Settings: {screen: Settings},
+  PillCard: {screen: PillCard},
+  BackHeader: {screen: BackHeader},
 });
-
-// export default connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-// )(AppContainer);

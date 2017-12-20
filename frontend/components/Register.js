@@ -18,25 +18,23 @@ import {
 import { Constants } from 'expo';
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
+
 class FadeIn extends React.Component {
   state = {
     fadeInAnim: new Animated.Value(0),
     // fadeOutAnim: new Animated.Value(1)
   }
+
   componentDidMount() {
     Animated.timing(this.state.fadeInAnim, {
         toValue: 1,
         duration: 5000,
         // easing: Easing.bounce()
       }).start();
-    // Animated.timing(this.state.fadeOutAnim, {
-    //     toValue: 0,
-    //     duration: 5000,
-    // }).start();
   }
+
   render() {
     let { fadeInAnim } = this.state;
-    // let { fadeOutAnim } = this.state;
     return (
       <Animated.View style={{ ...this.props.style, opacity: fadeInAnim }}>
         {this.props.children}
@@ -44,6 +42,7 @@ class FadeIn extends React.Component {
     );
   }
 }
+
 class Register extends React.Component {
   static navigationOptions = {
     title: 'Register',
@@ -75,7 +74,6 @@ class Register extends React.Component {
       })
     })
     .then((response) => {
-      //res.json({someresponse: shityouwanttosend})
       console.log('response',response)
       return response.json()
     })
@@ -89,32 +87,34 @@ class Register extends React.Component {
       console.log('error', err)
     });
   }
+
   login() {
     this.props.navigation.navigate('Login');
   }
+
   render() {
+
     return (
       <View style={styles.container1}>
           <Image onLoadEnd={()=>this.setState({loadEnd:true})} style={styles.background} source={require ('../../bluecrop.png')} />
           <FadeIn>
-          {/* <FadeOut> */}
           <TouchableOpacity>
-          <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 80, height: 80, top: 100}}
+            <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 50, height: 50, top: 60}}
             source={require ('../../logo.png')}
-          />
+            />
           </TouchableOpacity>
-        {/* </FadeOut> */}
         </FadeIn>
+        <View style={{flex: 1}}>
+          <View style={styles.reg}>
         <Text style={styles.title}>Register</Text>
-        <View style={styles.reg}>
           <TextInput
             style={{fontFamily: 'HelveticaNeue-Light',
-              top: 230,
+              top: 130,
               flex: 0,
               backgroundColor: 'transparent',
               height: 30,
-              alignItems: 'center',
-              justifyContent: 'center',
+              // alignItems: 'center',
+              // justifyContent: 'center',
               borderBottomWidth: 0.5,
               borderBottomColor: 'white',
               width: PAGE_WIDTH / 2,
@@ -125,7 +125,7 @@ class Register extends React.Component {
           />
           <TextInput
             style={{fontFamily: 'HelveticaNeue-Light',
-              top: 240,
+              top: 140,
               flex: 0,
               backgroundColor: 'transparent',
               height: 30,
@@ -141,7 +141,7 @@ class Register extends React.Component {
           />
         <TextInput
           style={{fontFamily: 'HelveticaNeue-Light',
-            top: 250,
+            top: 150,
             flex: 0,
             backgroundColor: 'transparent',
             height: 30,
@@ -157,7 +157,7 @@ class Register extends React.Component {
         />
         <TextInput
           style={{fontFamily: 'HelveticaNeue-Light',
-            top: 250,
+            top: 160,
             flex: 0,
             backgroundColor: 'transparent',
             height: 30,
@@ -173,7 +173,7 @@ class Register extends React.Component {
         />
         <TextInput
           style={{fontFamily: 'HelveticaNeue-Light',
-            top: 260,
+            top: 170,
             flex: 0,
             backgroundColor: 'transparent',
             height: 30,
@@ -190,7 +190,7 @@ class Register extends React.Component {
         />
         <TextInput
           style={{fontFamily: 'HelveticaNeue-Light',
-            top: 270,
+            top: 180,
             flex: 0,
             backgroundColor: 'transparent',
             height: 30,
@@ -206,16 +206,18 @@ class Register extends React.Component {
           onChangeText={(text) => this.setState({password2: text})}
         />
       </View>
+      </View>
         <TouchableOpacity style={styles.buttonRegister1} onPress={ () => {this.register2press()} }>
           <Text style={styles.buttonText}>REGISTER</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={ () => {this.login()} } style={{top: 570}}>
+        <TouchableOpacity onPress={ () => {this.login()} } style={{top: 620}}>
           <Text style={{color: '#6B91B0'}}>{"Already a user? Login here"}</Text>
         </TouchableOpacity>
       </View>
     )
   }
 }
+
 const styles = StyleSheet.create({
   container1: {
       justifyContent: 'center',
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       textAlign: 'center',
       lineHeight: 50,
-      top: 200
+      top: 110
     },
   buttonRegister1: {
       backgroundColor: 'blue',
@@ -244,7 +246,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      top: 540,
+      top: 465,
       borderRadius: 5
     },
   buttonText: {
@@ -265,9 +267,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 'auto'
   },
-  reg: {
-    backgroundColor: 'blue',
-    flex: 1
-  }
 });
-  export default Register;
+
+export default Register;
