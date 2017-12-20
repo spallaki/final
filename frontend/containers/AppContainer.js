@@ -1,29 +1,45 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import { connect } from 'react-redux';
-// import App from '../components/App';
+import {StyleSheet, View, Text} from 'react-native';
+import { StackNavigator } from 'react-navigation';
+// import { connect } from 'react-redux';
+import Calendar from '../components/Calendar.js';
+import Sidebar from '../components/Sidebar.js';
+import Settings from '../components/Settings.js';
+import Login from '../components/Login.js';
 
-const AppContainer = ({ name }) => {
-  return (
-    <View>
-      {/* <App name={name} /> */}
-      <Text>{name} Sup</Text>
-    </View>
-  );
-};
+// const AppContainer = ({ }) => {
+//   return (
+//     <View
+//       style={styles.container}
+//       >
+//       <Calendar />
+//     </View>
+//   );
+// };
 
-const mapStateToProps = (state) => {
-  return {
-    name: state.name
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     name: state.name
+//   };
+// };
+//
+// const mapDispatchToProps = (/* dispatch */) => {
+//   return {
+//   };
+// };
 
-const mapDispatchToProps = (/* dispatch */) => {
-  return {
-  };
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AppContainer);
+export default App = StackNavigator({
+  Calendar: {screen: Calendar},
+  Settings: {screen: Settings}
+});
+
+// export default connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(AppContainer);
