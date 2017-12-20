@@ -54,6 +54,13 @@ router.post('/addNote', (req, res) => {
   .catch((error) => res.json({success: false, error: error}))
 });
 
+router.post('/addReminder', (req, res) => {
+  db.query(`INSERT INTO reminders
+  VALUES($1, $2, $3)`, [req.body.day, req.body.set_time, req.params.id])
+  .then((result) => res.json({success: true}))
+  .catch((error) => res.json({success: false, error: error}))
+});
+
 router.post('/getAllRx', (req, res) => {
   db.query(`SELECT
       *
@@ -109,13 +116,38 @@ router.post('/updateRx', (req, res) => {
   SET (name, physician, dosage, quantity, type, rx_number, refills, received, expiration_date, pharmacy,
     pharmacy_phone) = $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
   WHERE id = $12`, [prescriptionName, req.body.physician, req.body.dosage, req.body.quantity, req.body.type,
-  req.body.rx_number, req.body.refills, received, expiration_date, req.body.pharmacy, req.body.pharmacy_phone])
+  req.body.rx_number, req.body.refills, received, expiration_date, req.body.pharmacy, req.body.pharmacy_phone,
+  req.params.id])
   .then((result) => res.json({success: true, result: result}))
   .catch((error) => res.json({success: false, error: error}))
 })
 
 router.post('/updateNote', (req, res) => {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if(dd<10) {
+    dd='0'+dd
+  }
+  if(mm<10) {
+    mm='0'+mm
+  }
+  today = mm + '/' + dd + '/' + yyyy;
 
+  db.query(`UPDATE notes
+  SET (createdAt, noteBody) = $1, $2
+  WHERE id = $3`, [today, req.body.noteBody, req.params.id])
+  .then((result) => res.json({success: true, result: result}))
+  .catch((error) => res.json({success: false, error: error}))
+})
+
+router.post('/updateReminder', (req, res) => {
+  db.query(`UPDATE reminders
+  SET (day, set_time) = $1, $2
+  WHERE id = $3`, [req.body.day, req.body.set_time, req.params.id])
+  .then((result) => res.json({success: true, result: result}))
+  .catch((error) => res.json({success: false, error: error}))
 })
 
 return router;
