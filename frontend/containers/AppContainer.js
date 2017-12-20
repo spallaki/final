@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 // import { connect } from 'react-redux';
 import { StackNavigator } from 'react-navigation';
 import Login from '../components/Login.js';
+import Calendar from '../components/Calendar.js';
 import Register from '../components/Register.js';
 import Med from '../components/Med.js';
 import Settings from '../components/Settings.js';
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
 export default App = StackNavigator({
   Login: {screen: Login},
   Register: {screen: Register},
+  Calendar: {screen: Calendar},
   Med: {screen: Med},
   Settings: {screen: Settings},
   PillCard: {screen: PillCard},

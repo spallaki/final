@@ -22,6 +22,7 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 class FadeIn extends React.Component {
   state = {
     fadeInAnim: new Animated.Value(0),
+    // fadeOutAnim: new Animated.Value(1)
   }
 
   componentDidMount() {
@@ -73,7 +74,6 @@ class Register extends React.Component {
       })
     })
     .then((response) => {
-      //res.json({someresponse: stuffyouwanttosend})
       console.log('response',response)
       return response.json()
     })
@@ -269,5 +269,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
-  export default Register;
+export default Register;

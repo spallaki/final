@@ -125,7 +125,7 @@ class Login extends React.Component {
     <Image onLoadEnd={()=>this.setState({loadEnd:true})} style={styles.background} source={require ('../../smallblue.png')} />
   <FadeIn>
   <TouchableOpacity>
-  <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 150, height: 150, top: 230}}
+  <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 150, height: 150, top: 0}}
     source={require ('../../logo.png')}
   />
   </TouchableOpacity>
@@ -136,7 +136,7 @@ class Login extends React.Component {
     fontFamily: 'HelveticaNeue-Light',
     fontSize: 17,
     color: 'white',
-    top: 460,
+    top: 60,
     padding: 20
   }}>
     The one-stop-shop for keeping track of<Text style={{fontStyle: 'italic'}}> ALL<Text style={{fontStyle: 'normal'}}> your prescriptions</Text></Text>
@@ -144,7 +144,7 @@ class Login extends React.Component {
 
   <TextInput
     style={{fontFamily: 'HelveticaNeue-Light',
-    top: 450,
+    top: 40,
     flex: 0,
     backgroundColor: 'transparent',
     height: 30,
@@ -162,7 +162,7 @@ class Login extends React.Component {
   />
   <TextInput
     style={{fontFamily: 'HelveticaNeue-Light',
-    top: 460,
+    top: 60,
     flex: 0,
     backgroundColor: 'transparent',
     height: 30,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       textAlign: 'center',
       lineHeight: 50,
-      top: 470
+      top: 10
     },
   buttonLogin1: {
       backgroundColor: 'blue',
