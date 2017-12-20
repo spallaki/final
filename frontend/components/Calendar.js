@@ -47,9 +47,8 @@ export default class Calendar extends React.Component {
 
         <Drawer
           ref={(ref) => { this.drawer = ref; }}
-          content={<SideBar style={{flex: 1, height: 1000}}
-            navigation={this.props.navigation}
-          />}
+          content={<SideBar style={{flex: 1, height: 1000}} navigation={this.props.navigation} />}
+          // content={<SideBar style={{flex: 1, height: 1000}} navigation={this.props.navigation} />}
           onClose={() => this.closeDrawer()} >
         <RXHeader openDrawer={this.openDrawer} />
         {/* <Header

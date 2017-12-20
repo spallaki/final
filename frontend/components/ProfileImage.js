@@ -147,8 +147,7 @@ export default class ProfileImage extends React.Component {
           color="#00adf5"
           onPress={this._pickImage}
         />
-        {image &&
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
       </View>
     );
   }
