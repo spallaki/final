@@ -131,6 +131,7 @@ class Med extends React.Component {
           <BackHeader
               currentScreen={'Med Info'}
               openDrawer={this.openDrawer}
+              navigation={this.props.navigation}
               // onPress={() => this.medList()}
           />
             <ScrollView>
