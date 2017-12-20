@@ -186,7 +186,7 @@ class Med extends React.Component {
                             source={require ('../../logo.png')}
                           />
                             <Text
-                              style={{marginLeft: 45, fontSize: 35, color: '#00adf5', marginTop: 20, fontFamily: 'HelveticaNeue-Light' }}>Edit Med Info
+                              style={{marginLeft: 60, fontSize: 35, color: '#00adf5', marginTop: 20, fontFamily: 'HelveticaNeue-Light' }}>Edit Med Info
                             </Text>
 
 
