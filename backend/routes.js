@@ -65,7 +65,7 @@ router.post('/getAllRx', (req, res) => {
   db.query(`SELECT
       *
     FROM prescriptions p
-    LEFT JOIN notes n ON (p.id = n.fk_prescription_id)
+    RIGHT JOIN notes n ON (p.id = n.fk_prescription_id)
     WHERE fk_user_id = $1`,
     [req.user.id])
   .then((result) => res.json({success: true, result: result.rows}))
