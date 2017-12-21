@@ -56,7 +56,7 @@ router.post('/addNote', (req, res) => {
 
 router.post('/addReminder', (req, res) => {
   db.query(`INSERT INTO reminders
-  VALUES($1, $2, $3)`, [req.body.day, req.body.set_time, req.params.id])
+  VALUES($1, $2, $3)`, [req.body.day, req.body.set_time, req.body.id])
   .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 });
@@ -108,16 +108,16 @@ router.post('/getAllRx', (req, res) => {
   // console.log(req.user)
 });
 
-router.post('/getRx/:id', (req, res) => {
-  db.query(`SELECT
-  *
-  FROM prescriptions
-  WHERE id = $1`, [req.body.id])
-  .then((result) => res.json({success: true, result: result.rows}))
-  .catch((error) => res.json({success: false, error: error}))
-  //front end gets all the prescription information, including the id and can access it in the state
-  //once you click on the prescription, it can access the id and will use the /getrx/:id route
-});
+// router.post('/getRx/:id', (req, res) => {
+//   db.query(`SELECT
+//   *
+//   FROM prescriptions
+//   WHERE id = $1`, [req.body.id])
+//   .then((result) => res.json({success: true, result: result.rows}))
+//   .catch((error) => res.json({success: false, error: error}))
+//   //front end gets all the prescription information, including the id and can access it in the state
+//   //once you click on the prescription, it can access the id and will use the /getrx/:id route
+// });
 
 router.post('/getProfile', (req, res) => {
   db.query(`SELECT
@@ -179,7 +179,7 @@ router.post('/updateNote', (req, res) => {
 router.post('/updateReminder', (req, res) => {
   db.query(`UPDATE reminders
   SET (day, set_time) = $1, $2
-  WHERE id = $3`, [req.body.day, req.body.set_time, req.params.id])
+  WHERE id = $3`, [req.body.day, req.body.set_time, req.body.id])
   .then((result) => res.json({success: true, result: result}))
   .catch((error) => res.json({success: false, error: error}))
 })
