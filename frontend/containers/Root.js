@@ -9,9 +9,7 @@ const store = configureStore();
 export default function Root({ }) {
   return (
     <Provider store={store}>
-      <View>
-        <AppContainer />
-      </View>
+      <AppContainer />
     </Provider>
   );
 }
