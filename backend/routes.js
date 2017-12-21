@@ -49,7 +49,7 @@ router.post('/addNote', (req, res) => {
   // today = mm + '/' + dd + '/' + yyyy;
 
   db.query(`INSERT INTO notes
-  VALUES($1, $2, $3)`, [req.body.noteBody, req.body.id])
+  VALUES($1, $2)`, [req.body.noteBody, req.body.id])
   .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 });
@@ -77,7 +77,7 @@ router.post('/getRx/:id', (req, res) => {
   db.query(`SELECT
   *
   FROM prescriptions
-  WHERE id = $1`, [req.params.id])
+  WHERE id = $1`, [req.body.id])
   .then((result) => res.json({success: true, result: result.rows}))
   .catch((error) => res.json({success: false, error: error}))
   //front end gets all the prescription information, including the id and can access it in the state
