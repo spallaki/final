@@ -63,12 +63,13 @@ router.post('/addReminder', (req, res) => {
 
 router.post('/getAllRx', (req, res) => {
   db.query(`SELECT
-      *
+    p.id, p.name, p.physician, p.dosage, p.quantity, p.type, p.rx_number, p.refills, p.received, p.expiration_date,
+    p.pharmacy, p.pharmacy_phone, n.createdAt, n.noteBody
     FROM prescriptions p
     LEFT JOIN notes n ON (p.id = n.fk_prescription_id)
     WHERE fk_user_id = $1`,
     [req.user.id])
-  .then((result) => res.json({success: true, result: result.rows}))
+  .then((result) => {res.json({success: true, result: result.rows}))
   .catch((error) => res.json({success: false, error: error}))
   // console.log(req.user)
 });
