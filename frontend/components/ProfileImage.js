@@ -5,9 +5,13 @@ import { RNS3 } from 'react-native-aws3';
 import { DOMAIN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from '../../env.js';
 
 export default class ProfileImage extends React.Component {
-  state = {
-    image: '',
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      image: ''
+    }
+  }
 
   Settings() {
     this.props.navigation.navigate('Settings')
@@ -56,6 +60,7 @@ export default class ProfileImage extends React.Component {
         })
         .then((responseJson) => {
           if (responseJson.success) {
+            // console.log('resoonsejson',responseJson);
             console.log('responseJson', responseJson);
           } else {
             alert('Picture was not uploaded');
@@ -83,7 +88,7 @@ export default class ProfileImage extends React.Component {
           color="#00adf5"
           onPress={this._pickImage}
         />
-        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        {this.state.image ? <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> : null}
       </View>
     );
   }
