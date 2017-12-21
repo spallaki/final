@@ -1,40 +1,38 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import { connect } from 'react-redux';
-// import PillList from '../components/pillList.js';
+import { View, Text, StyleSheet } from 'react-native';
+// import { connect } from 'react-redux';
+import { StackNavigator } from 'react-navigation';
+import Login from '../components/Login.js';
+import Calendar from '../components/Calendar.js';
+import Register from '../components/Register.js';
+import Med from '../components/Med.js';
+import Settings from '../components/Settings.js';
+import PillCard from '../components/PillCard.js';
+import BackHeader from '../components/BackHeader.js';
+// import Sidebar from '../components/Sidebar.js';
 import TestFile from '../components/testFile.js';
 
-// import App from '../components/App';
-
-const AppContainer = ({ name }) => {
-  console.log(TestFile);
+const AppContainer = ({  }) => {
   return (
     <View style={styles.container}>
-      <TestFile />
+      <Login />
     </View>
   );
 };
 
-// {/* <App name={name} /> */}
-// {/* <Text>{name} Sup</Text> */}
-const mapStateToProps = (state) => {
-  return {
-    // name: state.name
-  };
-};
-
-const mapDispatchToProps = (/* dispatch */) => {
-  return {
-  };
-};
-
 const styles = StyleSheet.create({
-  container:{
-    flex: 1
+  container: {
+    flex: 1,
   }
 });
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AppContainer);
+export default App = StackNavigator({
+  Login: {screen: Login},
+  TestFile: {screen: TestFile},
+  Register: {screen: Register},
+  Calendar: {screen: Calendar},
+  Med: {screen: Med},
+  Settings: {screen: Settings},
+  PillCard: {screen: PillCard},
+  BackHeader: {screen: BackHeader},
+});
