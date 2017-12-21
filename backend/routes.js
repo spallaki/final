@@ -73,7 +73,7 @@ router.post('/getAllRx', (req, res) => {
     var prescriptionsObject = {};
 
     result.rows.forEach((presc) => {
-      if (prescObject.hasOwnProperty(presc.id)) {
+      if (prescriptionsObject.hasOwnProperty(presc.id)) {
         var currentPrescription = prescriptionsObject[presc.id]
         var prescriptionNotes = currentPrescription.notes
         prescriptionNotes.push({createdAt: presc.createdat, noteBody: presc.notebody})
@@ -97,7 +97,8 @@ router.post('/getAllRx', (req, res) => {
     })
     res.json({success: true, result: Object.values(prescriptionsObject)})
   })
-  .catch((error) => res.json({success: false, error: error}))
+  .catch((error) => { console.log(error)
+    res.json({success: false, error: error}) })
   // console.log(req.user)
 });
 
