@@ -147,12 +147,12 @@ router.post('/updateRx', (req, res) => {
   var expiration_date = req.body.expiration_date || null;
 
   db.query(`UPDATE prescriptions
-  SET (physician, dosage, quantity, type, rx_number, refills, received, expiration_date, pharmacy,
-    pharmacy_phone) = $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
+  SET physician = $1, dosage = $2, quantity = $3, type = $4, rx_number = $5, refills = $6, received = $7,
+  expiration_date = $8, pharmacy = $9, pharmacy_phone = $10
   WHERE id = $11`, [req.body.physician, req.body.dosage, req.body.quantity, req.body.type,
   req.body.rx_number, req.body.refills, received, expiration_date, req.body.pharmacy, req.body.pharmacy_phone,
   req.body.id])
-  .then((result) => res.json({success: true}))
+  .then((result) => res.json({success: true, result: result}))
   .catch((error) => res.json({success: false, error: error}))
 })
 
