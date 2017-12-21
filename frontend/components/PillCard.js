@@ -51,6 +51,7 @@ export default class PillCard extends React.Component {
   }
 
   toPill = (prescription) => {
+    console.log('prescription from getting all rx', prescription)
     this.props.navigation.navigate('Med', {prescription: prescription});
   }
 
@@ -58,8 +59,9 @@ export default class PillCard extends React.Component {
     axios.post('http://agile-forest-10594.herokuapp.com/getAllRx')
     .then((response) => {
       this.setState({prescriptions: response.data.result})
+      console.log('response', this.state.prescriptions);
     })
-    .catch((error) => {error: error})
+    .catch((error) => {error: error});
   }
 
   render() {
@@ -68,63 +70,59 @@ export default class PillCard extends React.Component {
           <View style={{flex: 1}}>
           <View style={styles.inside_cont}>
             <Drawer ref={(ref) => { this.drawer = ref; }}
-           content={<Sidebar style={{flex: 1, height: 1000}}
-           navigation={this.props.navigation}
-         />}
-         onClose={() => this.closeDrawer()} >
-       <RXHeader currentScreen={'Med List'} openDrawer={this.openDrawer} />
-        <View style={{backgroundColor: 'transparent', width: '88%', flexDirection: 'row', alignSelf: 'left', paddingTop: 7, paddingBottom: 10, paddingLeft: 3}} searchBar rounded>
-        <Item style={{backgroundColor: 'white', alignSelf: 'center',paddingLeft: 5}}>
-          <Input placeholder="Search My Meds" />
-        </Item>
+              content={<Sidebar style={{flex: 1, height: 1000}}
+              navigation={this.props.navigation}
+              />}
+              onClose={() => this.closeDrawer()} >
+            <RXHeader currentScreen={'Med List'} openDrawer={this.openDrawer} />
+            <View style={{backgroundColor: 'transparent', width: '88%', flexDirection: 'row', alignSelf: 'left', paddingTop: 7, paddingBottom: 10, paddingLeft: 3}} searchBar rounded>
+              <Item style={{backgroundColor: 'white', alignSelf: 'center',paddingLeft: 5}}>
+                <Input placeholder="Search My Meds" />
+              </Item>
               <Button style = {{marginLeft: 3, backgroundColor: 'lightgray', width: 38, marginTop: 3}}>
                 <Text style={{color: 'white', fontWeight: 'bold', fontFamily: 'HelveticaNeue-Light', fontSize: 8, marginLeft: 10}}>
                     <Icon name="ios-search" />
                 </Text>
               </Button>
-  </View>
-    <View style={styles.container}>
+            </View>
+            <View style={styles.container}>
 
-      <ScrollView style={styles.inside_cont}>
-        <View style={styles.titlebox}>
-            <Image style={styles.logo} source={require ('../../logo.png')}/>
-            <Text style={{color: 'white', fontFamily: 'HelveticaNeue-Light', fontSize: 32, textAlign: 'left'}}> My Medications </Text>
-            <Text style={{color: 'white', fontFamily: 'HelveticaNeue-Light', fontSize: 14, textAlign: 'left'}}>   Select a prescription to view details.</Text>
+              <ScrollView style={styles.inside_cont}>
+                <View style={styles.titlebox}>
+                  <Image style={styles.logo} source={require ('../../logo.png')}/>
+                  <Text style={{color: 'white', fontFamily: 'HelveticaNeue-Light', fontSize: 32, textAlign: 'left'}}> My Medications </Text>
+                  <Text style={{color: 'white', fontFamily: 'HelveticaNeue-Light', fontSize: 14, textAlign: 'left'}}>   Select a prescription to view details.</Text>
+                </View>
+                <Card style={{marginTop: 10, alignItems: 'flex-start', backgroundColor: 'transparent'}}>
+                  {this.state.prescriptions.map(prescription => {
+                    return (
+                      <TouchableOpacity key={prescription.name} style={{alignSelf: 'center', justifyContent: 'center'}} onPress={() => this.toPill(prescription)}>
+                        <CardItem style={styles.cardItem}>
+                          <Icon style={styles.iconic} name="ios-contrast-outline"/>
+                            <Text style={styles.rxText}>
+                              {prescription.name}
+                            </Text>
+                        </CardItem>
+                      </TouchableOpacity>
+                    )}
+                  )}
+                </Card>
+              </ScrollView>
+            </View>
+          </Drawer>
         </View>
-          <Card style={{marginTop: 10, alignItems: 'flex-start', backgroundColor: 'transparent'}}>
-                {this.state.prescriptions.map(prescription => {
-                  return (
-              <TouchableOpacity key={prescription.name} style={{alignSelf: 'center', justifyContent: 'center'}} onPress={() => this.toPill(prescription)}>
-                <CardItem
-                  style={styles.cardItem}
-                  >
-                    <Icon style={styles.iconic} name="ios-contrast-outline"/>
-                    <Text style={styles.rxText}>
-                      {/* Birth Control */}
-                      {prescription.name}
-                    </Text>
-                  </CardItem>
-                </TouchableOpacity>
-                )}
-              )}
-
-          </Card>
-      {/* view above ends Cardbox */}
-    </ScrollView>
       </View>
-      </Drawer>
-      </View>
-    </View>
     </Container>
       );
-      }
-      }
-      const styles = StyleSheet.create({
-      container: {
-      flex: 1,
-      },
+    }
+}
 
-      inside_cont: {
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+
+    inside_cont: {
       backgroundColor: '#C6E2FF',
       height: PAGE_HEIGHT,
       width: PAGE_WIDTH,
@@ -133,13 +131,13 @@ export default class PillCard extends React.Component {
       padding: 0
       },
 
-      rxText: {
+    rxText: {
       fontFamily: 'HelveticaNeue-Light',
       color:'#4CC5F8',
       fontSize: 30
       },
 
-      iconic: {
+    iconic: {
       color:'gray',
       marginTop: 8,
       paddingLeft: 10,
@@ -147,7 +145,7 @@ export default class PillCard extends React.Component {
       fontSize: 20
       },
 
-      titlebox: {
+    titlebox: {
       backgroundColor: '#4CC5F8',
       borderColor: 'white',
       borderStyle: 'solid',
@@ -166,40 +164,40 @@ export default class PillCard extends React.Component {
       shadowOpacity: 0.3,
       shadowRadius: 15,
       shadowOffset: {
-      height: 12
+        height: 12
       }
-      },
+    },
 
-      cardItem: {
-        backgroundColor: '#F0F1F1',
-        alignItems: 'flex-start',
-        alignSelf: 'center',
-        width: 300,
-        height: 55,
-        marginTop: 7,
-        borderRadius: 6,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 5,
-        paddingRight: 5,
-        shadowColor: '#000000',
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        shadowOffset: {
-            height: 6
-          }
-        },
+    cardItem: {
+      backgroundColor: '#F0F1F1',
+      alignItems: 'flex-start',
+      alignSelf: 'center',
+      width: 300,
+      height: 55,
+      marginTop: 7,
+      borderRadius: 6,
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 5,
+      paddingRight: 5,
+      shadowColor: '#000000',
+      shadowOpacity: 0.3,
+      shadowRadius: 10,
+      shadowOffset: {
+        height: 6
+      }
+    },
 
-      logo: {
+    logo: {
       backgroundColor: 'transparent',
       resizeMode: 'contain',
       width: 40,
       height: 40,
       position: 'absolute',
       marginLeft: 15
-      },
+    },
 
-      mainbox: {
+    mainbox: {
       backgroundColor: '#CAE1FF',
       height: 430,
       width: 340,
@@ -214,9 +212,8 @@ export default class PillCard extends React.Component {
       shadowOpacity: 0.3,
       shadowRadius: 15,
       shadowOffset: {
-      height: 12
+        height: 12
       },
       paddingTop: 20
-      }
-
-      });
+    }
+  });

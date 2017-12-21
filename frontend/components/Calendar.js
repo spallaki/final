@@ -5,8 +5,8 @@ import {
   StyleSheet
 } from 'react-native';
 import {Agenda} from 'react-native-calendars';
-import moment from 'moment';
-import type Moment from 'moment';
+// import moment from 'moment';
+// import type Moment from 'moment';
 import { Header } from 'react-native-elements';
 import RXHeader from '../components/RXHeader.js';
 import { Drawer } from 'native-base';

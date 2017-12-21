@@ -15,9 +15,8 @@ import {
   Easing,
   ScrollView,
   KeyboardAvoidingView
-
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Constants } from 'expo';
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
@@ -38,7 +37,6 @@ class FadeIn extends React.Component {
 
   render() {
     let { fadeInAnim } = this.state;
-    // let { fadeOutAnim } = this.state;
     return (
       <Animated.View style={{ ...this.props.style, opacity: fadeInAnim }}>
         {this.props.children}
@@ -60,8 +58,6 @@ class Login extends React.Component {
       err:'',
       image: ''
     }
-
-    // console.log(this.props);
   }
 
   componentDidMount() {
@@ -110,90 +106,67 @@ class Login extends React.Component {
     this.props.navigation.navigate('Register');
   }
 
-  // med() {
-  //   this.props.navigation.navigate('Med');
-  // }
-  //
-  // pillcard() {
-  //   this.props.navigation.navigate('PillCard');
-  // }
 
   render() {
     return (
+      <KeyboardAvoidingView style={styles.container1} behavior="padding">
+        <Image onLoadEnd={()=>this.setState({loadEnd:true})} style={styles.background} source={require ('../../smallblue.png')} />
+        <FadeIn>
+          <TouchableOpacity>
+            <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 150, height: 150, top: 0}}
+              source={require ('../../logo.png')}
+            />
+          </TouchableOpacity>
+        </FadeIn>
 
-<KeyboardAvoidingView style={styles.container1} behavior="padding">
-    <Image onLoadEnd={()=>this.setState({loadEnd:true})} style={styles.background} source={require ('../../smallblue.png')} />
-  <FadeIn>
-  <TouchableOpacity>
-  <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 150, height: 150, top: 0}}
-    source={require ('../../logo.png')}
-  />
-  </TouchableOpacity>
-</FadeIn>
+        <Text style={styles.title}>Rx Tracker</Text>
+        <Text style={styles.desc, { fontFamily: 'HelveticaNeue-Light', fontSize: 17, color: 'white', top: 60, padding: 20}}>
+          The one-stop-shop for keeping track of
+          <Text style={{fontStyle: 'italic'}}> ALL<Text style={{fontStyle: 'normal'}}> your prescriptions</Text></Text>
+        </Text>
 
-  <Text style={styles.title}>Rx Tracker</Text>
-  <Text style={styles.desc, {
-    fontFamily: 'HelveticaNeue-Light',
-    fontSize: 17,
-    color: 'white',
-    top: 60,
-    padding: 20
-  }}>
-    The one-stop-shop for keeping track of<Text style={{fontStyle: 'italic'}}> ALL<Text style={{fontStyle: 'normal'}}> your prescriptions</Text></Text>
-  </Text>
-
-  <TextInput
-    style={{fontFamily: 'HelveticaNeue-Light',
-    top: 40,
-    flex: 0,
-    backgroundColor: 'transparent',
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'white',
-    width: PAGE_WIDTH / 2,
-    fontSize: 16
-    }}
-
-    placeholderTextColor="white"
-    placeholder="Username"
-    onChangeText={(text) => this.setState({username: text})}
-  />
-  <TextInput
-    style={{fontFamily: 'HelveticaNeue-Light',
-    top: 60,
-    flex: 0,
-    backgroundColor: 'transparent',
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'white',
-    width: PAGE_WIDTH / 2,
-    fontSize: 16,
-  }}
-    placeholderTextColor="white"
-    placeholder="Password"
-    secureTextEntry={true}
-    onChangeText={(text) => this.setState({password: text})}
-  />
-
-  {/* <TouchableOpacity onPress={ () => this.med() }>
-    <Text style={{backgroundColor: 'yellow', top: 230}}>{"PILL PAGE"}</Text>
-  </TouchableOpacity> */}
-
-  {/* <TouchableOpacity onPress={ () => this.pillcard() }>
-    <Text style={{backgroundColor: 'green', top: 250}}>{"PILL CARD"}</Text>
-  </TouchableOpacity> */}
-
-  <TouchableOpacity onPress={ () => this.login2press() } style={styles.buttonLogin1}>
-    <Text style={styles.buttonText}>{"LOGIN"}</Text>
-  </TouchableOpacity>
-  <TouchableOpacity onPress={ () => this.register() } style={{top: 530}}>
-    <Text style={{color: '#6B91B0'}}>{"Don't have an account? Sign up here"}</Text>
-  </TouchableOpacity>
-</KeyboardAvoidingView>
+        <TextInput
+          style={{fontFamily: 'HelveticaNeue-Light',
+            top: 50,
+            flex: 0,
+            backgroundColor: 'transparent',
+            height: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderBottomWidth: 0.5,
+            borderBottomColor: 'white',
+            width: PAGE_WIDTH / 2,
+            fontSize: 16
+          }}
+          placeholderTextColor="white"
+          placeholder="Username"
+          onChangeText={(text) => this.setState({username: text})}
+        />
+        <TextInput
+          style={{fontFamily: 'HelveticaNeue-Light',
+            top: 60,
+            flex: 0,
+            backgroundColor: 'transparent',
+            height: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderBottomWidth: 0.5,
+            borderBottomColor: 'white',
+            width: PAGE_WIDTH / 2,
+            fontSize: 16,
+          }}
+          placeholderTextColor="white"
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={(text) => this.setState({password: text})}
+        />
+        <TouchableOpacity onPress={ () => this.login2press() } style={styles.buttonLogin1}>
+          <Text style={styles.buttonText}>{"LOGIN"}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={ () => this.register() } style={{top: 130}}>
+          <Text style={{color: '#6B91B0'}}>{"Don't have an account? Sign up here"}</Text>
+        </TouchableOpacity>
+    </KeyboardAvoidingView>
     );
   }
 }
@@ -215,7 +188,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       textAlign: 'center',
       lineHeight: 50,
-      top: 10
+      top: 75
     },
   buttonLogin1: {
       backgroundColor: 'blue',

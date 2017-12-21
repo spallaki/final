@@ -12,7 +12,6 @@ import {
   Dimensions,
   Image,
   Animated,
-  // LayoutAnimation
 } from 'react-native';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Constants } from 'expo';
@@ -22,7 +21,6 @@ const PAGE_HEIGHT = Dimensions.get('window').height;
 class FadeIn extends React.Component {
   state = {
     fadeInAnim: new Animated.Value(0),
-    // fadeOutAnim: new Animated.Value(1)
   }
 
   componentDidMount() {
@@ -48,6 +46,7 @@ class Register extends React.Component {
     title: 'Register',
     header: null
   };
+
   constructor() {
     super();
     this.state = {
@@ -59,6 +58,7 @@ class Register extends React.Component {
       email: ''
     }
   }
+
   register2press() {
     fetch('https://agile-forest-10594.herokuapp.com/register',
     {
@@ -93,40 +93,51 @@ class Register extends React.Component {
   }
 
   render() {
-
     return (
       <View style={styles.container1}>
           <Image onLoadEnd={()=>this.setState({loadEnd:true})} style={styles.background} source={require ('../../bluecrop.png')} />
           <FadeIn>
-          <TouchableOpacity>
-            <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 50, height: 50, top: 60}}
-            source={require ('../../logo.png')}
-            />
-          </TouchableOpacity>
-        </FadeIn>
+            <TouchableOpacity>
+              <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 50, height: 50, top: 60}}
+                source={require ('../../logo.png')}
+              />
+            </TouchableOpacity>
+          </FadeIn>
         <View style={{flex: 1}}>
           <View style={styles.reg}>
-        <Text style={styles.title}>Register</Text>
-          <TextInput
-            style={{fontFamily: 'HelveticaNeue-Light',
-              top: 130,
-              flex: 0,
-              backgroundColor: 'transparent',
-              height: 30,
-              // alignItems: 'center',
-              // justifyContent: 'center',
-              borderBottomWidth: 0.5,
-              borderBottomColor: 'white',
-              width: PAGE_WIDTH / 2,
-              fontSize: 16,}}
-            placeholderTextColor="white"
-            placeholder="First Name"
-            onChangeText={(text) => this.setState({firstName: text})}
-          />
-          <TextInput
-            style={{fontFamily: 'HelveticaNeue-Light',
-              top: 140,
-              flex: 0,
+            <Text style={styles.title}>Register</Text>
+            <TextInput
+              style={{fontFamily: 'HelveticaNeue-Light',
+                top: 80,
+                backgroundColor: 'transparent',
+                height: 30,
+                borderBottomWidth: 0.5,
+                borderBottomColor: 'white',
+                width: PAGE_WIDTH / 2,
+                fontSize: 16
+              }}
+              placeholderTextColor="white"
+              placeholder="First Name"
+              onChangeText={(text) => this.setState({firstName: text})}
+            />
+            <TextInput
+              style={{fontFamily: 'HelveticaNeue-Light',
+                top: 90,
+                backgroundColor: 'transparent',
+                height: 30,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderBottomWidth: 0.5,
+                borderBottomColor: 'white',
+                width: PAGE_WIDTH / 2,
+                fontSize: 16,}}
+              placeholderTextColor="white"
+              placeholder="Last Name"
+              onChangeText={(text) => this.setState({lastName: text})}
+            />
+            <TextInput
+              style={{fontFamily: 'HelveticaNeue-Light',
+              top: 100,
               backgroundColor: 'transparent',
               height: 30,
               alignItems: 'center',
@@ -136,85 +147,66 @@ class Register extends React.Component {
               width: PAGE_WIDTH / 2,
               fontSize: 16,}}
             placeholderTextColor="white"
-            placeholder="Last Name"
-            onChangeText={(text) => this.setState({lastName: text})}
+            placeholder="Username"
+            onChangeText={(text) => this.setState({username: text})}
           />
-        <TextInput
-          style={{fontFamily: 'HelveticaNeue-Light',
-            top: 150,
-            flex: 0,
-            backgroundColor: 'transparent',
-            height: 30,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomWidth: 0.5,
-            borderBottomColor: 'white',
-            width: PAGE_WIDTH / 2,
-            fontSize: 16,}}
-          placeholderTextColor="white"
-          placeholder="Username"
-          onChangeText={(text) => this.setState({username: text})}
-        />
-        <TextInput
-          style={{fontFamily: 'HelveticaNeue-Light',
-            top: 160,
-            flex: 0,
-            backgroundColor: 'transparent',
-            height: 30,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomWidth: 0.5,
-            borderBottomColor: 'white',
-            width: PAGE_WIDTH / 2,
-            fontSize: 16,}}
-          placeholderTextColor="white"
-          placeholder="Email"
-          onChangeText={(text) => this.setState({email: text})}
-        />
-        <TextInput
-          style={{fontFamily: 'HelveticaNeue-Light',
-            top: 170,
-            flex: 0,
-            backgroundColor: 'transparent',
-            height: 30,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomWidth: 0.5,
-            borderBottomColor: 'white',
-            width: PAGE_WIDTH / 2,
-            fontSize: 16,}}
-          placeholderTextColor="white"
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={(text) => this.setState({password: text})}
-        />
-        <TextInput
-          style={{fontFamily: 'HelveticaNeue-Light',
-            top: 180,
-            flex: 0,
-            backgroundColor: 'transparent',
-            height: 30,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomWidth: 0.5,
-            borderBottomColor: 'white',
-            width: PAGE_WIDTH / 2,
-            fontSize: 16,}}
-          placeholderTextColor="white"
-          placeholder="Repeat Password"
-          secureTextEntry={true}
-          onChangeText={(text) => this.setState({password2: text})}
-        />
-      </View>
+          <TextInput
+            style={{fontFamily: 'HelveticaNeue-Light',
+              top: 110,
+              backgroundColor: 'transparent',
+              height: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderBottomWidth: 0.5,
+              borderBottomColor: 'white',
+              width: PAGE_WIDTH / 2,
+              fontSize: 16,}}
+            placeholderTextColor="white"
+            placeholder="Email"
+            onChangeText={(text) => this.setState({email: text})}
+          />
+          <TextInput
+            style={{fontFamily: 'HelveticaNeue-Light',
+              top: 120,
+              backgroundColor: 'transparent',
+              height: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderBottomWidth: 0.5,
+              borderBottomColor: 'white',
+              width: PAGE_WIDTH / 2,
+              fontSize: 16,}}
+            placeholderTextColor="white"
+            placeholder="Password"
+            secureTextEntry={true}
+            onChangeText={(text) => this.setState({password: text})}
+          />
+          <TextInput
+            style={{fontFamily: 'HelveticaNeue-Light',
+              top: 135,
+              backgroundColor: 'transparent',
+              height: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderBottomWidth: 0.5,
+              borderBottomColor: 'white',
+              width: PAGE_WIDTH / 2,
+              fontSize: 16,}}
+            placeholderTextColor="white"
+            placeholder="Repeat Password"
+            secureTextEntry={true}
+            onChangeText={(text) => this.setState({password2: text})}
+          />
+        </View>
       </View>
         <TouchableOpacity style={styles.buttonRegister1} onPress={ () => {this.register2press()} }>
           <Text style={styles.buttonText}>REGISTER</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={ () => {this.login()} } style={{top: 620}}>
+        <TouchableOpacity onPress={ () => {this.login()} } style={{bottom: 35}}>
           <Text style={{color: '#6B91B0'}}>{"Already a user? Login here"}</Text>
         </TouchableOpacity>
-      </View>
-    )
+    </View>
+  );
   }
 }
 
@@ -234,7 +226,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       textAlign: 'center',
       lineHeight: 50,
-      top: 110
+      top: 65
     },
   buttonRegister1: {
       backgroundColor: 'blue',
@@ -246,7 +238,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      top: 465,
+      bottom: 170,
       borderRadius: 5
     },
   buttonText: {
