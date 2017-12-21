@@ -71,7 +71,49 @@ router.post('/getAllRx', (req, res) => {
     [req.user.id])
   .then((result) => {
     //put notes into an array
-    //{1: [note1, note2]}
+    //{1: {name: lipitor, quanity: 2, notes: [note1,note2]}}
+    // {
+    //   "id": 1,
+    //   "name": "Lipitor",
+    //   "physician": "Dr. Kim",
+    //   "dosage": "10 mg",
+    //   "quantity": "30",
+    //   "type": "Pill",
+    //   "rx_number": "968596",
+    //   "refills": "2",
+    //   "received": "10/5/2017",
+    //   "expiration_date": "11/2018",
+    //   "pharmacy": "Walgreens",
+    //   "pharmacy_phone": "(123) 456-7890",
+    //   "createdat": "2017-12-21T00:00:00.000Z",
+    //   "notebody": "Hi"
+    // }
+    var prescriptionsObject = {};
+      // {
+      //   1: {name: lipitor, quanity: 2, notes: [note1,note2]},
+      //   2: {name: otherdrug, quanity: 3, notes: [note1]}
+      // }
+    result.rows.forEach((presc) => {
+      if (prescObject.hasOwnProperty(presc.id)) {
+        var currentPrescription = prescriptionsObject[presc.id]
+        var prescriptionNotes = currentPrescription.notes
+        prescriptionNotes.push({createdAt: presc.createdat, noteBody: presc.notebody})
+      } else {
+        prescriptionsObject[presc.id] = {
+          name: presc.name,
+          physician: presc.physician,
+          dosage: presc.dosage,
+          quantity: presc.quantity,
+          type: presc.type,
+          rx_number: presc.rx_number,
+          refills: presc.refills,
+          received: presc.received,
+          expiration_date: presc.expiration_date,
+          pharmacy: presc.pharmacy,
+          pharmacy_phone: presc.pharmacy_phone,
+          notes: [{createdAt: presc.createdat, noteBody: presc.notebody}]
+      }
+    })
     res.json({success: true, result: result})
   })
   .catch((error) => res.json({success: false, error: error}))
