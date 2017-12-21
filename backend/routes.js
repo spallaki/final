@@ -149,7 +149,7 @@ router.post('/updateRx', (req, res) => {
   db.query(`UPDATE prescriptions
   SET (physician, dosage, quantity, type, rx_number, refills, received, expiration_date, pharmacy,
     pharmacy_phone) = $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
-  WHERE id = $11`, [prescriptionName, req.body.physician, req.body.dosage, req.body.quantity, req.body.type,
+  WHERE id = $11`, [req.body.physician, req.body.dosage, req.body.quantity, req.body.type,
   req.body.rx_number, req.body.refills, received, expiration_date, req.body.pharmacy, req.body.pharmacy_phone,
   req.body.id])
   .then((result) => res.json({success: true}))
