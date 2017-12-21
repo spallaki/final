@@ -67,8 +67,8 @@ class Med extends React.Component {
       received: '',
       expiration_date: '',
       pharmacy: '',
-      pharmacy_phone: ''
-      // reminders: []
+      pharmacy_phone: '',
+      reminders: []
     }
   }
 
@@ -98,23 +98,29 @@ class Med extends React.Component {
     this.props.navigation.navigate('MedList');
   }
 
+
   saveNotes() {
+    // console.log('this.state.params presc', this.props.navigation.state.params.prescription)
     axios.post('https://agile-forest-10594.herokuapp.com/addNote', {
       noteBody: this.state.saveNotes,
-      id: this.props.prescription
+      id: this.props.navigation.state.params.prescription.id
     })
     .then((resp) => {
-      // console.log(resp)
+      console.log('addnote', resp)
       this.setState({saveNotes: resp.data})
     })
     .catch((error) => {error: error})
     }
 
 //REMINDERS ROUTE
-  // componentDidMount() {
-  //   axios.post('https://agile-forest-10594.herokuapp.com/addReminder',
-// })
-  // }
+  componentDidMount() {
+    axios.post('https://agile-forest-10594.herokuapp.com/addReminder')
+    .then((response) => {
+      console.log('reminder', response);
+      this.setState({reminders: response.data})
+    })
+    .catch((error) => {error: error})
+  }
 
 
   render() {
@@ -134,7 +140,7 @@ class Med extends React.Component {
               navigation={this.props.navigation}
               // onPress={() => this.medList()}
           />
-            <ScrollView>
+            <View>
             <View style={styles.titlebox}>
               <Text style={{color: 'white', fontFamily: 'HelveticaNeue-Thin', fontSize: 48, top: 20}}>
                 {this.props.navigation.state.params.prescription.name}
@@ -147,7 +153,7 @@ class Med extends React.Component {
                 </TouchableOpacity>
                   <Modal isVisible={this.state.isModalVisible}>
                     <View style={{ flex: 1 }}>
-                      <View style={{ justifyContent: 'center', alignItems: 'center', height: 300, backgroundColor: 'lightgray', borderRadius: 5, top: 100}}>
+                      <View style={{ justifyContent: 'center', alignItems: 'center', height: 300, backgroundColor: 'white', borderRadius: 5, top: 100}}>
 
                         <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 50, height: 50, bottom: 30}}
                           source={require ('../../logo.png')}
@@ -157,15 +163,15 @@ class Med extends React.Component {
                           <Text>
                             <Text style={{fontWeight: 'bold'}}>Rx #: </Text> {this.props.navigation.state.params.prescription.rx_number}
                           </Text>
-                          <TextInput
-                            style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'white', width: PAGE_WIDTH / 2}}
-                            placeholderTextColor='white'
+                          {/* <TextInput
+                            style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2}}
+                            placeholderTextColor='lightgray'
                             placeholder="Enter your Rx #"
                           >
-                          </TextInput>
+                          </TextInput> */}
                           <TextInput
-                            style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'white', width: PAGE_WIDTH / 2, paddingTop: 10}}
-                            placeholderTextColor='white'
+                            style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, paddingTop: 10}}
+                            placeholderTextColor='lightgray'
                             placeholder="Enter your address"
                           >
                           </TextInput>
@@ -186,11 +192,26 @@ class Med extends React.Component {
                             source={require ('../../logo.png')}
                           />
                             <Text
-                              style={{marginLeft: 60, fontSize: 35, color: '#00adf5', marginTop: 20, fontFamily: 'HelveticaNeue-Light' }}>Edit Med Info
+                              style={{ justifyContent: 'center', alignSelf: 'center', fontSize: 30, color: '#00adf5', marginTop: 20, fontFamily: 'HelveticaNeue-Light' }}>Edit Reminders
                             </Text>
-
-
                               <ScrollView>
+
+                                <TextInput
+                                  style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2}}
+                                  placeholderTextColor='lightgray'
+                                  placeholder="Boop"
+                                  >
+                                  <Text>boop</Text>
+                                </TextInput>
+                                <TextInput></TextInput>
+                                <TextInput></TextInput>
+                                <TextInput></TextInput>
+                                <TextInput></TextInput>
+                                <TextInput></TextInput>
+                                <TextInput></TextInput>
+                                <TextInput></TextInput>
+                                <TextInput></TextInput>
+                                <TextInput></TextInput>
 
                               </ScrollView>
                         </View>
@@ -199,36 +220,67 @@ class Med extends React.Component {
 
                     <Modal isVisible={this.state.rxIsModalOpen}>
                       <View style={{ flex: 1 }}>
-                        <View style={{ flex: 1 }}>
-                          <View style={{ justifyContent: 'center', alignItems: 'center', height: 300, backgroundColor: 'lightgray', borderRadius: 5, top: 100}}>
+                        <View style={{ height: 600, backgroundColor: 'white', borderRadius: 5, fontFamily: 'HelveticaNeue-Light' }}>
+                          <Button onPress={this._rxhideModal} style={styles.remButton}>
+                            <Text style={{marginLeft: 10, color: 'white'}}>X</Text>
+                          </Button>
+                          <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 50, height: 50, justifyContent: 'center', alignSelf: 'center'}}
+                            source={require ('../../logo.png')}
+                          />
+                            <Text
+                              style={{ justifyContent: 'center', alignSelf: 'center', fontSize: 30, color: '#00adf5', marginTop: 20, fontFamily: 'HelveticaNeue-Light' }}>Edit Med Info
+                            </Text>
+                              <ScrollView contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
 
-                            <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 50, height: 50, bottom: 30}}
-                              source={require ('../../logo.png')}
-                            />
+                                <Text>Rx #: </Text>
+                                <TextInput
+                                  style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2}}
+                                  // placeholderTextColor='lightgray'
+                                  // placeholder="Boop"
+                                  defaultValue={this.props.navigation.state.params.prescription.rx_number}
+                                  >
+                                </TextInput>
+                                <TextInput>
 
-                              <Text style={{ fontSize: 35, color: '#4CC5F8', bottom: 20, fontFamily: 'HelveticaNeue-Light' }} closeOnClick={true}>Refill with Walgreens</Text>
-                              <Text>
-                                <Text style={{fontWeight: 'bold'}}>Rx #: </Text> {this.props.navigation.state.params.prescription.rx_number}
-                              </Text>
-                              <TextInput
-                                style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'white', width: PAGE_WIDTH / 2}}
-                                placeholderTextColor='white'
-                                placeholder="Enter your Rx #"
-                              >
-                              </TextInput>
-                              <TextInput
-                                style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'white', width: PAGE_WIDTH / 2, paddingTop: 10}}
-                                placeholderTextColor='white'
-                                placeholder="Enter your address"
-                              >
-                              </TextInput>
-                                <Text
-                                  onPress={this._rxhideModal}
-                                  style={{ borderWidth: 1, borderColor: '#4CC5F8', top: 23, borderRadius: 4, padding: 5 }}>Done</Text>
-                            </View>
-                          </View>
+
+                                </TextInput>
+                                <TextInput>
+
+
+                                </TextInput>
+                                <TextInput>
+
+
+                                </TextInput>
+                                <TextInput>
+
+
+                                </TextInput>
+                                <TextInput>
+
+
+                                </TextInput>
+                                <TextInput>
+
+
+                                </TextInput>
+                                <TextInput>
+
+
+                                </TextInput>
+                                <TextInput>
+
+
+                                </TextInput>
+                                <TextInput>
+
+
+                                </TextInput>
+
+                              </ScrollView>
                         </View>
-                      </Modal>
+                      </View>
+                    </Modal>
 
                 </View>
                 <View style={styles.mainbox}>
@@ -242,7 +294,6 @@ class Med extends React.Component {
                       <ScrollView style={{color: 'white', fontFamily: 'HelveticaNeue-Light', fontSize: 20, alignSelf: 'flex-start', paddingLeft: 30, top: 50, position: 'absolute', maxHeight: 90, width: 320}}>
                         <Text>Every M, W, F</Text>
                         <Text>9:00 am</Text>
-                        <Text>Take 2</Text>
                         <Text>{this.props.navigation.state.params.prescription.rx_number}</Text>
                         <Text>Take 2</Text>
                         <Text>Take 2</Text>
@@ -304,9 +355,17 @@ class Med extends React.Component {
                       numberOfLines={5}
                       onChangeText={(text) => this.setState({saveNotes: text})}
                       value={this.state.saveNotes}
-                    />
+                    >
+                      <Text>
+                        {this.props.navigation.state.params.prescription.notes.map((note) => {
+                          return (
+                            <Text>{note.createdAt}, {note.noteBody}</Text>
+                          )
+                        })}
+                      </Text>
+                    </TextInput>
                   </View>
-                </ScrollView>
+                </View>
                 </Drawer>
               </View>
           </View>
