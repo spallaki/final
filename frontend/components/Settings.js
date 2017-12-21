@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Dimensions, TextInput } from 'react-native';
+import { View, StyleSheet, Text, Dimensions, TextInput, Image, ScrollView } from 'react-native';
 // import ProfileImage from './ProfileImage';
 import { Header } from 'react-native-elements';
 import RXHeader from '../components/RXHeader.js';
@@ -25,6 +25,27 @@ export default class Settings extends React.Component {
     }
   }
 
+  componentDidMount() {
+    fetch('https://agile-forest-10594.herokuapp.com/getProfile',{
+      method: 'POST',
+    })
+    .then((response) => {
+      console.log(response);
+      return response.json()
+    })
+    .then((responseJson) => {
+      if (responseJson.success) {
+        this.setState({image: responseJson.result[0].profile_pic})
+      } else {
+        console.log('Error finding picture', responseJson.error);
+      }
+    })
+    .catch((err) => {
+      console.log('Found no picture');
+      alert(err)
+    })
+  }
+
   closeDrawer = () => {
     this.drawer._root.close()
   };
@@ -38,21 +59,25 @@ export default class Settings extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={styles.inside_cont}>
-        {/* <RXHeader /> */}
+        {/* <RXHeader currentScreen={'Settings'} openDrawer={this.openDrawer}/> */}
         <Drawer
           ref={(ref) => { this.drawer = ref; }}
-          content={<Sidebar style={{flex: 1, height: 1000}}
-            navigation={this.props.navigation}
-          />}
+          content={<Sidebar style={{flex: 1, height: 1000}} navigation={this.props.navigation} />}
           onClose={() => this.closeDrawer()} >
         <RXHeader currentScreen={'Settings'} openDrawer={this.openDrawer} />
-        <ProfileImage navigation={this.props.navigation} />
         <Text style={{fontSize: 34, color: 'white', fontFamily: 'HelveticaNeue-Light', paddingTop: 10, alignSelf: 'center'}}>Account</Text>
-        <View style={styles.profilepic}></View>
+        {/* <ProfileImage navigation={this.props.navigation} /> */}
+        {/* <ScrollView> */}
+        {/* <View style={styles.profilepic}></View> */}
+        <Image
+          source={{ uri: this.state.image }}
+          style={{height: 75, width: 75, marginTop: 10, borderRadius: 10, alignSelf: 'center'}}
+        />
+        <ProfileImage navigation={this.props.navigation} />
         <View style={{justifyContent: 'center', alignItems: 'center', bottom: 200}}>
         <TextInput
           style={{fontFamily: 'HelveticaNeue-Light',
-            top: 230,
+            top: 220,
             flex: 0,
             backgroundColor: 'transparent',
             height: 30,
@@ -67,7 +92,7 @@ export default class Settings extends React.Component {
           onChangeText={(text) => this.setState({firstName: text})}
         /><TextInput
           style={{fontFamily: 'HelveticaNeue-Light',
-            top: 240,
+            top: 230,
             flex: 0,
             backgroundColor: 'transparent',
             height: 30,
@@ -83,7 +108,7 @@ export default class Settings extends React.Component {
         />
       <TextInput
         style={{fontFamily: 'HelveticaNeue-Light',
-          top: 250,
+          top: 240,
           flex: 0,
           backgroundColor: 'transparent',
           height: 30,
@@ -99,7 +124,7 @@ export default class Settings extends React.Component {
       />
       <TextInput
         style={{fontFamily: 'HelveticaNeue-Light',
-          top: 260,
+          top: 250,
           flex: 0,
           backgroundColor: 'transparent',
           height: 30,
@@ -115,6 +140,8 @@ export default class Settings extends React.Component {
         onChangeText={(text) => this.setState({password: text})}
       />
       </View>
+{/* <ProfileImage navigation={this.props.navigation} /> */}
+    {/* </ScrollView> */}
       </Drawer>
       </View>
       </View>
