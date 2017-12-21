@@ -31,7 +31,8 @@ export default class Profile extends React.Component {
       return response.json()
     })
     .then((responseJson) => {
-      if (responseJson.success) {
+      if (responseJson.success && responseJson.result[0].profile_pic) {
+        console.log('pro pic in profile.js',responseJson.result[0].profile_pic)
         this.setState({image: responseJson.result[0].profile_pic})
       } else {
         console.log('Error finding picture', responseJson.error);
@@ -76,14 +77,5 @@ const styles = StyleSheet.create({
     height: PAGE_HEIGHT,
     width: PAGE_WIDTH,
     position: 'absolute'
-  },
-  profilepic: {
-    width: 100,
-    height: 100,
-    borderRadius: 100/2,
-    borderColor: 'white',
-    backgroundColor: 'white',
-    marginLeft: 135,
-    marginTop: 30
   }
 });

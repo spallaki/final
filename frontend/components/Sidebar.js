@@ -50,7 +50,8 @@ componentDidMount() {
     return response.json()
   })
   .then((responseJson) => {
-    if (responseJson.success) {
+    if (responseJson.success && responseJson.result[0].profile_pic) {
+      console.log('pro pic in sidebar', responseJson.result[0].profile_pic);
       this.setState({image: responseJson.result[0].profile_pic})
     } else {
       // console.log('Error finding picture', responseJson.error);
@@ -76,6 +77,7 @@ profile() {
 
 
   render() {
+    console.log('this.state.image in sidebar', this.state.image);
     return (
       <View style={{flex: 1, backgroundColor: 'white', alignItems: 'center'}}>
         <Image
