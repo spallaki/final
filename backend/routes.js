@@ -69,7 +69,12 @@ router.post('/getAllRx', (req, res) => {
     LEFT JOIN notes n ON (p.id = n.fk_prescription_id)
     WHERE fk_user_id = $1`,
     [req.user.id])
-  .then((result) => res.json({success: true, result: result.rows}))
+  .then((result) => {
+    //put notes into an array
+    //{1: [note1, note2]}
+    console.log(result);
+    res.json({success: true, result: result.rows})
+  })
   .catch((error) => res.json({success: false, error: error}))
   // console.log(req.user)
 });
