@@ -67,12 +67,18 @@ export default class RXHeader extends Component {
   }
 
 
-  componentWillMount(){
+  componentWillMount() {
     this.setState({modalImage: require('../assets/logo.jpg')})
   }
+
   _showModal = () => this.setState({ isModalVisible: true })
 
   _hideModal = () => this.setState({ isModalVisible: false })
+
+  _combined() {
+    this.addRx2press();
+    this._hideModal();
+  }
 
   render() {
     return (
@@ -153,7 +159,7 @@ export default class RXHeader extends Component {
                       <Input onChangeText={(text) => this.setState({type: text})}/>
                     </Item>
                   </Form>
-                  <Button onPress={ () => {this.addRx2press()} } style={{marginLeft: 140, marginTop: 20, marginBottom: 20, backgroundColor: '#00adf5'}}><Text>Add</Text></Button>
+                  <Button onPress={ () => this._combined() } style={{marginLeft: 140, marginTop: 20, marginBottom: 20, backgroundColor: '#00adf5'}}><Text>Add</Text></Button>
                     {/* <Button onPress={this._hideModal} style={{marginLeft: 135, marginTop: 0, marginBottom: 20, backgroundColor: '#F0BC0F'}}><Text>Close</Text></Button> */}
                   </ScrollView>
                 </View>

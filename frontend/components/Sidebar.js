@@ -70,6 +70,10 @@ settings() {
   this.props.navigation.navigate('Settings')
 }
 
+profile() {
+  this.props.navigation.navigate('Profile')
+}
+
 
   render() {
     return (
@@ -78,6 +82,7 @@ settings() {
           source={{ uri: this.state.image }}
           style={{height: 75, width: 75, marginTop: 30, borderRadius: 10}}
         />
+        <Button onPress={ () => {this.profile()} } title='Profile' color="#00adf5"/>
         <Button onPress={ () => {this.settings()} } title='Settings' color="#00adf5"/>
         <Button onPress={ () => {this.calendar()} } title='Calendar' color="#00adf5"/>
         <Button onPress={ () => this.props.navigation.navigate('PillCard')} title='All Prescriptions' color="#00adf5"/>
@@ -87,9 +92,3 @@ settings() {
     );
   }
 }
-
-
-//THINGS TO DO
-// 1. fix calander navigation route
-// 2. figure out user picture
-// 3. logout

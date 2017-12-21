@@ -71,72 +71,8 @@ export default class ProfileImage extends React.Component {
       })
     }
   }
-  //
-  //   const file = {
-  //   // `uri` can also be a file system path (i.e. file://)
-  //   uri: "result.uri", //path on phone to image
-  //   name: "image.png",
-  //   type: "image/png"
-  // }
-  //
-  // const options = {
-  //   keyPrefix: "uploads/",
-  //   bucket: "imagepicker1",
-  //   region: "us-east-1",
-  //   accessKey: AWS_ACCESS_KEY_ID,
-  //   secretKey: AWS_SECRET_ACCESS_KEY,
-  //   successActionStatus: 201
-  // }
-  //
-  // RNS3.put(file, options).then(response => {
-  //  if (response.status !== 201)
-  // throw new Error("Failed to upload image to S3");
-  //   console.log(response.body);
-  //
-  //   /**
-  //    * {
-  //    *   postResponse: {
-  //    *     bucket: "your-bucket",
-  //    *     etag : "9f620878e06d28774406017480a59fd4",
-  //    *     key: "uploads/image.png",
-  //    *     location: "https://your-bucket.s3.amazonaws.com/uploads%2Fimage.png"
-  //    *   }
-  //    * }
-  //    */
-  //   .then((response) => {
-  //     return response.json();
-  //   })
-  //   .then((responseJson) {
-  //     if (responseJson.success) {
-  //       this.props.navigation.navigate('Settings');
-  //     } else {
-  //       this.setState({error: 'error'});
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  //   _pickImage = async () => {
-  //     let result = await ImagePicker.launchImageLibraryAsync({
-  //       allowsEditing: true,
-  //       aspect: [4, 3],
-  //     });
-  //
-  //     console.log(result);
-  //
-  //     if (!result.cancelled) {
-  //       this.setState({ image: result.uri });
-  //       const file = {
-  //         uri: result.uri
-  //         name: "image.png"
-  //         type: "image/png"
-  //       }
-  //     }
-  //   };
-  //
-  //
-  // });
-  //
+
+
   render() {
     let { image } = this.state;
 

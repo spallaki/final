@@ -9,7 +9,7 @@ import Med from '../components/Med.js';
 import Settings from '../components/Settings.js';
 import PillCard from '../components/PillCard.js';
 import BackHeader from '../components/BackHeader.js';
-// import Sidebar from '../components/Sidebar.js';
+import Profile from '../components/Profile.js';
 
 const AppContainer = ({  }) => {
   return (
@@ -33,4 +33,5 @@ export default App = StackNavigator({
   Settings: {screen: Settings},
   PillCard: {screen: PillCard},
   BackHeader: {screen: BackHeader},
+  Profile: {screen: Profile},
 });
