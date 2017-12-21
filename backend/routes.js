@@ -67,7 +67,7 @@ router.post('/getAllRx', (req, res) => {
     p.pharmacy, p.pharmacy_phone, n.createdAt, n.noteBody
     FROM prescriptions p
     LEFT JOIN notes n ON (p.id = n.fk_prescription_id)
-    LEFT JOIN reminders r ON (p.id = r. fk_prescription_id)
+    LEFT JOIN reminders r ON (p.id = r.fk_prescription_id)
     WHERE fk_user_id = $1`,
     [req.user.id])
   .then((result) => {
