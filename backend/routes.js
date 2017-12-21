@@ -76,8 +76,14 @@ router.post('/getAllRx', (req, res) => {
       if (prescriptionsObject.hasOwnProperty(presc.id)) {
         var currentPrescription = prescriptionsObject[presc.id]
         var prescriptionNotes = currentPrescription.notes
-        prescriptionNotes.push({createdAt: presc.createdat, noteBody: presc.notebody})
+        if (presc.createdat && presc.notebody) {
+          prescriptionNotes.push({createdAt: presc.createdat, noteBody: presc.notebody})
+        }
       } else {
+        var notes = [];
+        if (presc.createdat && presc.notebody) {
+          notes.push({createdAt: presc.createdat, noteBody: presc.notebody})
+        }
         prescriptionsObject[presc.id] = {
           id: presc.id,
           name: presc.name,
@@ -91,7 +97,7 @@ router.post('/getAllRx', (req, res) => {
           expiration_date: presc.expiration_date,
           pharmacy: presc.pharmacy,
           pharmacy_phone: presc.pharmacy_phone,
-          notes: [{createdAt: presc.createdat, noteBody: presc.notebody}]
+          notes: notes
         }
       }
     })
