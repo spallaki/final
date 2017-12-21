@@ -170,7 +170,7 @@ router.post('/updateNote', (req, res) => {
   today = mm + '/' + dd + '/' + yyyy;
 
   db.query(`UPDATE notes
-  SET (createdAt, noteBody) = $1, $2
+  SET createdAt = $1, noteBody = $2
   WHERE id = $3`, [today, req.body.noteBody, req.params.id])
   .then((result) => res.json({success: true, result: result}))
   .catch((error) => res.json({success: false, error: error}))
@@ -178,7 +178,7 @@ router.post('/updateNote', (req, res) => {
 
 router.post('/updateReminder', (req, res) => {
   db.query(`UPDATE reminders
-  SET (day, set_time) = $1, $2
+  SET day = $1, set_time = $2
   WHERE id = $3`, [req.body.day, req.body.set_time, req.body.id])
   .then((result) => res.json({success: true, result: result}))
   .catch((error) => res.json({success: false, error: error}))
