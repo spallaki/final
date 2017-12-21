@@ -27,16 +27,16 @@ logout = () => {
       try {
         let logoutAwait = await AsyncStorage.removeItem('user')
       } catch (e) {
-        console.log('Some error loging out: ', e);
+        // console.log('Some error loging out: ', e);
       }
         return this.props.navigation.navigate('Login');
   } else {
     alert(responseJson.error)
-    console.log('Error signing out', responseJson.error);
+    // console.log('Error signing out', responseJson.error);
   }
   })
   .catch((err) => {
-    console.log('Another error signing out');
+    // console.log('Another error signing out');
     alert(err)
   });
 }
@@ -46,18 +46,18 @@ componentDidMount() {
     method: 'POST',
   })
   .then((response) => {
-    console.log(response);
+    // console.log(response);
     return response.json()
   })
   .then((responseJson) => {
     if (responseJson.success) {
       this.setState({image: responseJson.result[0].profile_pic})
     } else {
-      console.log('Error finding picture', responseJson.error);
+      // console.log('Error finding picture', responseJson.error);
     }
   })
   .catch((err) => {
-    console.log('Found no picture');
+    // console.log('Found no picture');
     alert(err)
   })
 }
