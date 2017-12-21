@@ -6,7 +6,7 @@ import { DOMAIN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from '../../env.js';
 
 export default class ProfileImage extends React.Component {
   state = {
-    image: null,
+    image: '',
   };
 
   Settings() {
