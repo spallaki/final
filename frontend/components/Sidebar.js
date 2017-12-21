@@ -51,7 +51,7 @@ componentDidMount() {
   })
   .then((responseJson) => {
     if (responseJson.success) {
-      this.setState({image: responseJson.photo})
+      this.setState({image: responseJson.result[0].profile_pic})
     } else {
       console.log('Error finding picture', responseJson.error);
     }

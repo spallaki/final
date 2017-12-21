@@ -46,7 +46,7 @@ export default class Settings extends React.Component {
           />}
           onClose={() => this.closeDrawer()} >
         <RXHeader currentScreen={'Settings'} openDrawer={this.openDrawer} />
-        <ProfileImage />
+        <ProfileImage navigation={this.props.navigation} />
         <Text style={{fontSize: 34, color: 'white', fontFamily: 'HelveticaNeue-Light', paddingTop: 10, alignSelf: 'center'}}>Account</Text>
         <View style={styles.profilepic}></View>
         <View style={{justifyContent: 'center', alignItems: 'center', bottom: 200}}>
