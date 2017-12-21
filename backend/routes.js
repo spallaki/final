@@ -142,17 +142,16 @@ router.post('/updateRx', (req, res) => {
   //check what req.body has
   //if req.body has something new, it'll update particular parts
   //switch statement
-  var prescriptionName = req.body.name.charAt(0).toUpperCase() + req.body.name.slice(1);
   // var physician = req.body.physician.charAt(0).toUpperCase() + req.body.name.slice(1);
   var received = req.body.received || null;
   var expiration_date = req.body.expiration_date || null;
 
   db.query(`UPDATE prescriptions
-  SET (name, physician, dosage, quantity, type, rx_number, refills, received, expiration_date, pharmacy,
-    pharmacy_phone) = $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11
-  WHERE id = $12`, [prescriptionName, req.body.physician, req.body.dosage, req.body.quantity, req.body.type,
+  SET (physician, dosage, quantity, type, rx_number, refills, received, expiration_date, pharmacy,
+    pharmacy_phone) = $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
+  WHERE id = $11`, [prescriptionName, req.body.physician, req.body.dosage, req.body.quantity, req.body.type,
   req.body.rx_number, req.body.refills, received, expiration_date, req.body.pharmacy, req.body.pharmacy_phone,
-  req.params.id])
+  req.body.id])
   .then((result) => res.json({success: true, result: result}))
   .catch((error) => res.json({success: false, error: error}))
 })
