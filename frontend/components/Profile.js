@@ -56,7 +56,6 @@ export default class Profile extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={styles.inside_cont}>
-        {/* <RXHeader currentScreen={'Settings'} openDrawer={this.openDrawer}/> */}
         <Drawer
           ref={(ref) => { this.drawer = ref; }}
           content={<Sidebar style={{flex: 1, height: 1000}} navigation={this.props.navigation} />}
@@ -64,16 +63,6 @@ export default class Profile extends React.Component {
         <RXHeader currentScreen={'Settings'} openDrawer={this.openDrawer} />
         <Text style={{fontSize: 34, color: 'white', fontFamily: 'HelveticaNeue-Light', paddingTop: 10, alignSelf: 'center'}}>Profile Image</Text>
         <ProfileImage navigation={this.props.navigation} />
-        {/* <ScrollView> */}
-        {/* <View style={styles.profilepic}></View> */}
-        {/* <Image
-          source={{ uri: this.state.image }}
-          style={{height: 75, width: 75, marginTop: 30, borderRadius: 10, alignSelf: 'center'}}
-        /> */}
-        {/* <ProfileImage navigation={this.props.navigation} /> */}
-
-{/* <ProfileImage navigation={this.props.navigation} /> */}
-    {/* </ScrollView> */}
       </Drawer>
       </View>
       </View>

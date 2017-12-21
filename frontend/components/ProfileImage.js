@@ -5,9 +5,12 @@ import { RNS3 } from 'react-native-aws3';
 import { DOMAIN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } from '../../env.js';
 
 export default class ProfileImage extends React.Component {
-  state = {
-    image: '',
+  constructor(props){
+    super(props);
+    this.state = {
+    image: null,
   };
+}
 
   Settings() {
     this.props.navigation.navigate('Settings')
