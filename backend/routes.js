@@ -152,7 +152,7 @@ router.post('/updateRx', (req, res) => {
   WHERE id = $11`, [prescriptionName, req.body.physician, req.body.dosage, req.body.quantity, req.body.type,
   req.body.rx_number, req.body.refills, received, expiration_date, req.body.pharmacy, req.body.pharmacy_phone,
   req.body.id])
-  .then((result) => res.json({success: true, result: result}))
+  .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 })
 
