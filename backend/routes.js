@@ -36,20 +36,20 @@ router.post('/addRx', (req, res) => {
 })
 
 router.post('/addNote', (req, res) => {
-  // var today = new Date();
-  // var dd = today.getDate();
-  // var mm = today.getMonth() + 1;
-  // var yyyy = today.getFullYear();
-  // if(dd<10) {
-  //   dd='0'+dd
-  // }
-  // if(mm<10) {
-  //   mm='0'+mm
-  // }
-  // today = mm + '/' + dd + '/' + yyyy;
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1;
+  var yyyy = today.getFullYear();
+  if(dd<10) {
+    dd='0'+dd
+  }
+  if(mm<10) {
+    mm='0'+mm
+  }
+  today = mm + '/' + dd + '/' + yyyy;
 
   db.query(`INSERT INTO notes
-  VALUES($1, $2)`, [req.body.noteBody, req.body.id])
+  VALUES($1, $2, $3)`, [today, req.body.noteBody, req.body.id])
   .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 });
