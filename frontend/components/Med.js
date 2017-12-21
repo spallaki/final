@@ -58,44 +58,53 @@ class Med extends React.Component {
       saveNotes: '',
       rxIsModalOpen: false,
       remisModalOpen: false,
-      physician: '',
-      dosage: '',
-      quantity: '',
-      type: '',
-      rx_number: '',
-      refills: '',
-      received: '',
-      expiration_date: '',
-      pharmacy: '',
-      pharmacy_phone: '',
-      reminders: []
-    }
+      physician: this.props.navigation.state.params.prescription.physician,
+      dosage: this.props.navigation.state.params.prescription.dosage,
+      quantity: this.props.navigation.state.params.prescription.quantity,
+      type: this.props.navigation.state.params.prescription.type,
+      rx_number: this.props.navigation.state.params.prescription.rx_number,
+      refills: this.props.navigation.state.params.prescription.refills,
+      received: this.props.navigation.state.params.prescription.received,
+      expiration_date: this.props.navigation.state.params.prescription.expiration_date,
+      pharmacy: this.props.navigation.state.params.prescription.pharmacy,
+      pharmacy_phone: this.props.navigation.state.params.prescription.pharmacy_phone,
+      set_time: this.props.navigation.state.params.prescription.set_time,
+      day: this.props.navigation.state.params.prescription.day
   }
+}
 
 
-  closeDrawer = () => {
+  closeDrawer(){
     this.drawer._root.close()
   };
 
-  openDrawer = () => {
+  openDrawer(){
     this.drawer._root.open()
   };
 
-  _showModal = () => this.setState({ isModalVisible: true })
+  _showModal(){
+    this.setState({ isModalVisible: true })
+  }
 
-  _hideModal = () => this.setState({ isModalVisible: false })
+  _hideModal() {
+    this.setState({ isModalVisible: false })
+  }
 
-  _rxshowModal = () => this.setState({ rxIsModalOpen: true })
+  _rxshowModal(){
+    this.setState({ rxIsModalOpen: true })
 
-  _rxhideModal = () => this.setState({ rxIsModalOpen: false })
+  }
 
-  _remshowModal = () => this.setState({ remIsModalOpen: true })
+  _rxhideModal(){
+    this.setState({ rxIsModalOpen: false })
+  }
 
-  _remhideModal = () => this.setState({ remIsModalOpen: false })
+  _remshowModal(){
+    this.setState({ remIsModalOpen: true })
+  }
 
-
-  medList() {
-    this.props.navigation.navigate('MedList');
+  _remhideModal() {
+    this.setState({ remIsModalOpen: false })
   }
 
 
@@ -106,22 +115,61 @@ class Med extends React.Component {
       id: this.props.navigation.state.params.prescription.id
     })
     .then((resp) => {
-      console.log('addnote', resp)
+      // console.log('addnote', resp)
       this.setState({saveNotes: resp.data})
     })
     .catch((error) => {error: error})
     }
 
+    updateRxInfo() {
+      axios.post('https://agile-forest-10594.herokuapp.com/updateRx', {
+        id: this.props.navigation.state.params.prescription.id,
+        physician: this.state.physician,
+        dosage: this.state.dosage,
+        quantity: this.state.quantity,
+        type: this.state.type,
+        rx_number: this.state.rx_number,
+        refills: this.state.refills,
+        received: this.state.received,
+        expiration_date: this.state.expiration_date,
+        pharmacy: this.state.pharmacy,
+        pharmacy_phone: this.state.pharmacy_phone
+      })
+      .then((response) => {
+        console.log('update', response);
+        // if (response.data.success === true) {
+        // }
+      })
+      .catch((error) => {error: error})
+    }
+
+    combined() {
+      this.updateRxInfo();
+      this._rxhideModal();
+    }
+
+
 //REMINDERS ROUTE
-  componentDidMount() {
-    axios.post('https://agile-forest-10594.herokuapp.com/addReminder')
+  addReminder() {
+    axios.post('https://agile-forest-10594.herokuapp.com/addReminder', {
+      id: this.props.navigation.state.params.prescription.id,
+      day: this.state.day,
+      set_time: this.state.set_time
+    })
     .then((response) => {
       console.log('reminder', response);
-      this.setState({reminders: response.data})
+      // this.setState({reminders: response.data})
     })
-    .catch((error) => {error: error})
+    .catch((error) => {
+
+      console.log('error', error)
+    })
   }
 
+  combined2() {
+    this.addReminder();
+    this._remhideModal();
+  }
 
   render() {
     let { text } = this.state;
@@ -130,15 +178,15 @@ class Med extends React.Component {
         <View style={styles.inside_cont}>
           <Drawer
             ref={(ref) => { this.drawer = ref; }}
-            content={<Sidebar style={{flex: 1, height: 1000}}
-            navigation={this.props.navigation}
-          />}
+            content={<Sidebar
+                style={{flex: 1, height: 1000}}
+                navigation={this.props.navigation}
+                />}
             onClose={() => this.closeDrawer()} >
           <BackHeader
               currentScreen={'Med Info'}
               openDrawer={this.openDrawer}
               navigation={this.props.navigation}
-              // onPress={() => this.medList()}
           />
             <View>
             <View style={styles.titlebox}>
@@ -147,7 +195,7 @@ class Med extends React.Component {
               </Text>
 
                 <TouchableOpacity style={{alignSelf: 'flex-end', right: 30, bottom: 30}}
-                  onPress={this._showModal}
+                  onPress={() => this._showModal()}
                 >
                   <Image style={{width: 90, height: 30 }} source={require ('../../refill.png')}/>
                 </TouchableOpacity>
@@ -161,14 +209,8 @@ class Med extends React.Component {
 
                           <Text style={{ fontSize: 35, color: '#4CC5F8', bottom: 20, fontFamily: 'HelveticaNeue-Light' }} closeOnClick={true}>Refill with Walgreens</Text>
                           <Text>
-                            <Text style={{fontWeight: 'bold'}}>Rx #: </Text> {this.props.navigation.state.params.prescription.rx_number}
+                            <Text style={{fontWeight: 'bold'}}>Rx #: </Text> {this.state.rx_number}
                           </Text>
-                          {/* <TextInput
-                            style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2}}
-                            placeholderTextColor='lightgray'
-                            placeholder="Enter your Rx #"
-                          >
-                          </TextInput> */}
                           <TextInput
                             style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, paddingTop: 10}}
                             placeholderTextColor='lightgray'
@@ -176,7 +218,7 @@ class Med extends React.Component {
                           >
                           </TextInput>
                             <Text
-                              onPress={this._hideModal}
+                              onPress={() => this._hideModal()}
                               style={{ borderWidth: 1, borderColor: '#4CC5F8', top: 23, borderRadius: 4, padding: 5 }}>Done</Text>
                         </View>
                       </View>
@@ -185,7 +227,7 @@ class Med extends React.Component {
                     <Modal isVisible={this.state.remIsModalOpen}>
                       <View style={{ flex: 1 }}>
                         <View style={{ height: 600, backgroundColor: 'white', borderRadius: 5, fontFamily: 'HelveticaNeue-Light' }}>
-                          <Button onPress={this._remhideModal} style={styles.remButton}>
+                          <Button onPress={() => this._remhideModal()} style={styles.remButton}>
                             <Text style={{marginLeft: 10, color: 'white'}}>X</Text>
                           </Button>
                           <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 50, height: 50, justifyContent: 'center', alignSelf: 'center'}}
@@ -194,25 +236,32 @@ class Med extends React.Component {
                             <Text
                               style={{ justifyContent: 'center', alignSelf: 'center', fontSize: 30, color: '#00adf5', marginTop: 20, fontFamily: 'HelveticaNeue-Light' }}>Edit Reminders
                             </Text>
-                              <ScrollView>
+                              <ScrollView contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
 
-                                <TextInput
-                                  style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2}}
-                                  placeholderTextColor='lightgray'
-                                  placeholder="Boop"
-                                  >
-                                  <Text>boop</Text>
-                                </TextInput>
-                                <TextInput></TextInput>
-                                <TextInput></TextInput>
-                                <TextInput></TextInput>
-                                <TextInput></TextInput>
-                                <TextInput></TextInput>
-                                <TextInput></TextInput>
-                                <TextInput></TextInput>
-                                <TextInput></TextInput>
-                                <TextInput></TextInput>
+                                  <Text style={{fontWeight: 'bold', paddingRight: 20}}>Day(s):
+                                    <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.day}
+                                    onChangeText={(text) => this.setState({day: text})}
+                                    >
+                                    </TextInput>
+                                  </Text>
 
+                                  <Text style={{fontWeight: 'bold', paddingRight: 20}}>Time:
+                                    <TextInput
+                                      style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                      defaultValue={this.state.set_time}
+                                      onChangeText={(text) => this.setState({set_time: text})}
+                                      >
+                                    </TextInput>
+                                  </Text>
+
+                                  <Button
+                                    onPress={() => this.combined2()}
+                                    style={{justifyContent: 'center', alignSelf: 'center', width: 60}}
+                                    >
+                                    <Text style={{color: 'white', justifyContent: 'center', alignSelf: 'center'}}>Save</Text>
+                                  </Button>
                               </ScrollView>
                         </View>
                       </View>
@@ -221,7 +270,7 @@ class Med extends React.Component {
                     <Modal isVisible={this.state.rxIsModalOpen}>
                       <View style={{ flex: 1 }}>
                         <View style={{ height: 600, backgroundColor: 'white', borderRadius: 5, fontFamily: 'HelveticaNeue-Light' }}>
-                          <Button onPress={this._rxhideModal} style={styles.remButton}>
+                          <Button onPress={() => this._rxhideModal()} style={styles.remButton}>
                             <Text style={{marginLeft: 10, color: 'white'}}>X</Text>
                           </Button>
                           <Image style={{backgroundColor: 'transparent', resizeMode: 'contain', width: 50, height: 50, justifyContent: 'center', alignSelf: 'center'}}
@@ -232,50 +281,101 @@ class Med extends React.Component {
                             </Text>
                               <ScrollView contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
 
-                                <Text>Rx #: </Text>
-                                <TextInput
-                                  style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2}}
-                                  // placeholderTextColor='lightgray'
-                                  // placeholder="Boop"
-                                  defaultValue={this.props.navigation.state.params.prescription.rx_number}
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Rx #:
+                                  <TextInput
+                                  style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                  defaultValue={this.state.rx_number}
+                                  onChangeText={(text) => this.setState({rx_number: text})}
                                   >
-                                </TextInput>
-                                <TextInput>
+                                  </TextInput>
+                                </Text>
 
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Physician:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.physician}
+                                    onChangeText={(text) => this.setState({physician: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
 
-                                </TextInput>
-                                <TextInput>
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Pharmacy:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.pharmacy}
+                                    onChangeText={(text) => this.setState({pharmacy: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
 
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Pharmacy Phone:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.pharmacy_phone}
+                                    onChangeText={(text) => this.setState({pharmacy_phone: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
 
-                                </TextInput>
-                                <TextInput>
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Refills Left:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.refills}
+                                    onChangeText={(text) => this.setState({refills: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
 
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Dosage:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.dosage}
+                                    onChangeText={(text) => this.setState({dosage: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
 
-                                </TextInput>
-                                <TextInput>
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Quantity:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.quantity}
+                                    onChangeText={(text) => this.setState({quantity: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
 
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Type:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.type}
+                                    onChangeText={(text) => this.setState({type: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
 
-                                </TextInput>
-                                <TextInput>
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Date Received:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.received}
+                                    onChangeText={(text) => this.setState({received: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
 
-
-                                </TextInput>
-                                <TextInput>
-
-
-                                </TextInput>
-                                <TextInput>
-
-
-                                </TextInput>
-                                <TextInput>
-
-
-                                </TextInput>
-                                <TextInput>
-
-
-                                </TextInput>
+                                <Text style={{fontWeight: 'bold', paddingRight: 20}}>Expiry date:
+                                  <TextInput
+                                    style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
+                                    defaultValue={this.state.expiration_date}
+                                    onChangeText={(text) => this.setState({expiration_date: text})}
+                                    >
+                                  </TextInput>
+                                </Text>
+                                <Button
+                                  onPress={() => this.combined()}
+                                  style={{justifyContent: 'center', alignSelf: 'center', width: 60}}
+                                  >
+                                  <Text style={{color: 'white', justifyContent: 'center', alignSelf: 'center'}}>Save</Text>
+                                </Button>
 
                               </ScrollView>
                         </View>
@@ -287,7 +387,7 @@ class Med extends React.Component {
                   <Text style={{color: '#4CC5F8', fontFamily: 'HelveticaNeue-Light', fontSize: 30, alignSelf: 'flex-start', paddingLeft: 20,
                     top: 10, position: 'absolute'}}>Reminders</Text>
                     <TouchableOpacity style={styles.edits, { borderWidth: 1, borderColor: '#4CC5F8', bottom: 170, borderRadius: 4, padding: 5, marginLeft: 250
-                    }} onPress={this._remshowModal}
+                    }} onPress={() => this._remshowModal()}
                     >
                       <Text>EDIT</Text>
                     </TouchableOpacity>
@@ -303,7 +403,8 @@ class Med extends React.Component {
                     <Text style={{color: '#4CC5F8', fontFamily: 'HelveticaNeue-Light', fontSize: 30, alignSelf: 'flex-start', paddingLeft: 20,
                       top: 130, position: 'absolute'}}>Rx Information</Text>
                     <TouchableOpacity style={styles.edits, { borderWidth: 1, borderColor: '#4CC5F8', bottom: 80, marginLeft: 250, borderRadius: 4, padding: 5
-                    }} onPress={this._rxshowModal}
+                    }} onPress={() => this._rxshowModal()
+                    }
                     >
                       <Text>EDIT</Text>
                     </TouchableOpacity>
@@ -348,22 +449,28 @@ class Med extends React.Component {
                     >
                       <Text>SAVE</Text>
                     </TouchableOpacity>
-                    <TextInput
+
+                    <ScrollView
                       style={styles.notes}
-                      placeholder="Type anything..."
-                      multiline={true}
-                      numberOfLines={5}
-                      onChangeText={(text) => this.setState({saveNotes: text})}
-                      value={this.state.saveNotes}
-                    >
+                      >
                       <Text>
                         {this.props.navigation.state.params.prescription.notes.map((note) => {
                           return (
-                            <Text>{note.createdAt}, {note.noteBody}</Text>
+                            <Text>{note.createdAt}: {note.noteBody}{"\n"}</Text>
                           )
                         })}
+                        <TextInput
+                          style={{width: 300, height: 400, maxWidth: 300}}
+                          // style={styles.notes}
+                          placeholder="Add a new note..."
+                          multiline={true}
+                          numberOfLines={5}
+                          onChangeText={(text) => this.setState({saveNotes: text})}
+                          // value={this.state.saveNotes}
+                          >
+                      </TextInput>
                       </Text>
-                    </TextInput>
+                    </ScrollView>
                   </View>
                 </View>
                 </Drawer>
@@ -468,8 +575,8 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     // borderRightWidth: 0.2,
     borderRadius: 2,
-    height: 120,
-    width: 300,
+    maxHeight: 120,
+    maxWidth: 300,
     top: 300,
     position: 'absolute',
     color: 'black',
