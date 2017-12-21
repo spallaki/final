@@ -72,8 +72,7 @@ router.post('/getAllRx', (req, res) => {
   .then((result) => {
     //put notes into an array
     //{1: [note1, note2]}
-    console.log(result);
-    res.json({success: true, result: result.rows})
+    res.json({success: true, result: result})
   })
   .catch((error) => res.json({success: false, error: error}))
   // console.log(req.user)
