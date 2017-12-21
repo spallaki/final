@@ -49,7 +49,7 @@ router.post('/addNote', (req, res) => {
   today = mm + '/' + dd + '/' + yyyy;
 
   db.query(`INSERT INTO notes
-  VALUES($1, $2, $3)`, [today, req.body.noteBody, req.body.id])
+  VALUES($1, $2, $3)`, [today, req.body.noteBody, req.params.id])
   .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 });
