@@ -126,6 +126,48 @@ router.get('/getMedSched', (req, res) => {
           dayObject['0'] = [reminder.name]
         }
       }
+      if (reminder.day === 'Monday') {
+        if (dayObject['1']) {
+          dayObject['1'].push(reminder.name)
+        } else {
+          dayObject['1'] = [reminder.name]
+        }
+      }
+      if (reminder.day === 'Tuesday') {
+        if (dayObject['2']) {
+          dayObject['2'].push(reminder.name)
+        } else {
+          dayObject['2'] = [reminder.name]
+        }
+      }
+      if (reminder.day === 'Wednesday') {
+        if (dayObject['3']) {
+          dayObject['3'].push(reminder.name)
+        } else {
+          dayObject['3'] = [reminder.name]
+        }
+      }
+      if (reminder.day === 'Thursday') {
+        if (dayObject['4']) {
+          dayObject['4'].push(reminder.name)
+        } else {
+          dayObject['4'] = [reminder.name]
+        }
+      }
+      if (reminder.day === 'Friday') {
+        if (dayObject['5']) {
+          dayObject['5'].push(reminder.name)
+        } else {
+          dayObject['5'] = [reminder.name]
+        }
+      }
+      if (reminder.day === 'Saturday') {
+        if (dayObject['6']) {
+          dayObject['6'].push(reminder.name)
+        } else {
+          dayObject['6'] = [reminder.name]
+        }
+      }
     })
     res.json({success: true, result: daysObject})
    })
