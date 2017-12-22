@@ -56,7 +56,7 @@ router.post('/addNote', (req, res) => {
 
 router.post('/addReminder', (req, res) => {
   db.query(`INSERT INTO reminders (day, set_time, fk_prescription_id)
-  VALUES($1, $2, $3)`, [req.body.day, req.body.time, req.body.id])
+  VALUES($1, $2, $3)`, [req.body.day, req.body.set_time, req.body.id])
   .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 });
