@@ -118,7 +118,7 @@ router.post('/getAllRx', (req, res) => {
 
 router.get('/getMedSched', (req, res) => {
    db.query(`SELECT
-     r.day, r.set_time, p.id "prescID", p.name, u.id "userID"
+     r.day, r.set_time, p.id "prescID", p.name, u.id "userID", p.color
      FROM reminders r
      JOIN prescriptions p on r.fk_prescription_id = p.id
      JOIN users u on u.id = p.fk_user_id
@@ -128,51 +128,51 @@ router.get('/getMedSched', (req, res) => {
     result.rows.forEach((reminder) => {
       if (reminder.day === 'Sunday') {
         if (dayObject['0']) {
-          dayObject['0'].push(reminder.name)
+          dayObject['0'].push({name: reminder.name, color: reminder.color})
         } else {
-          dayObject['0'] = [{name: reminder.name, color: ]
+          dayObject['0'] = [{name: reminder.name, color: reminder.color}]
         }
       }
       if (reminder.day === 'Monday') {
         if (dayObject['1']) {
-          dayObject['1'].push(reminder.name)
+          dayObject['1'].push({name: reminder.name, color: reminder.color})
         } else {
-          dayObject['1'] = [reminder.name]
+          dayObject['1'] = [{name: reminder.name, color: reminder.color}]
         }
       }
       if (reminder.day === 'Tuesday') {
         if (dayObject['2']) {
-          dayObject['2'].push(reminder.name)
+          dayObject['2'].push({name: reminder.name, color: reminder.color})
         } else {
-          dayObject['2'] = [reminder.name]
+          dayObject['2'] = [{name: reminder.name, color: reminder.color}]
         }
       }
       if (reminder.day === 'Wednesday') {
         if (dayObject['3']) {
-          dayObject['3'].push(reminder.name)
+          dayObject['3'].push({name: reminder.name, color: reminder.color})
         } else {
-          dayObject['3'] = [reminder.name]
+          dayObject['3'] = [{name: reminder.name, color: reminder.color}]
         }
       }
       if (reminder.day === 'Thursday') {
         if (dayObject['4']) {
-          dayObject['4'].push(reminder.name)
+          dayObject['4'].push({name: reminder.name, color: reminder.color})
         } else {
-          dayObject['4'] = [reminder.name]
+          dayObject['4'] = [{name: reminder.name, color: reminder.color}]
         }
       }
       if (reminder.day === 'Friday') {
         if (dayObject['5']) {
-          dayObject['5'].push(reminder.name)
+          dayObject['5'].push({name: reminder.name, color: reminder.color})
         } else {
-          dayObject['5'] = [reminder.name]
+          dayObject['5'] = [{name: reminder.name, color: reminder.color}]
         }
       }
       if (reminder.day === 'Saturday') {
         if (dayObject['6']) {
-          dayObject['6'].push(reminder.name)
+          dayObject['6'].push({name: reminder.name, color: reminder.color})
         } else {
-          dayObject['6'] = [reminder.name]
+          dayObject['6'] = [{name: reminder.name, color: reminder.color}]
         }
       }
     })
