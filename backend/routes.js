@@ -116,7 +116,7 @@ router.get('/getMedSched', (req, res) => {
      JOIN prescriptions p on r.fk_prescription_id = p.id
      JOIN users u on u.id = p.fk_user_id
      WHERE u.id = $1`, [req.user.id])
-  .then((result) => { console.log(result) })
+  .then((result) => res.json({success: true, result: result}))
   .catch((error) => res.json({success: false, error: error}))
 })
 // router.post('/getRx/:id', (req, res) => {
