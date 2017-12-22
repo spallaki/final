@@ -73,7 +73,7 @@ router.post('/addReminder', (req, res) => {
 router.post('/getAllRx', (req, res) => {
   db.query(`SELECT
     p.id, p.name, p.physician, p.dosage, p.quantity, p.type, p.rx_number, p.refills, p.received, p.expiration_date,
-    p.pharmacy, p.pharmacy_phone, n.createdAt, n.noteBody, r.day, r.set_time
+    p.pharmacy, p.pharmacy_phone, n.createdAt, n.noteBody, r.day, r.set_time, p.color
     FROM prescriptions p
     LEFT JOIN notes n ON (p.id = n.fk_prescription_id)
     LEFT JOIN reminders r ON (p.id = r.fk_prescription_id)
@@ -109,6 +109,7 @@ router.post('/getAllRx', (req, res) => {
           pharmacy_phone: presc.pharmacy_phone,
           day: presc.day,
           time: presc.set_time,
+          color: presc.color,
           notes: notes
         }
       }
