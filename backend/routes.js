@@ -99,7 +99,7 @@ router.post('/getAllRx', (req, res) => {
           pharmacy: presc.pharmacy,
           pharmacy_phone: presc.pharmacy_phone,
           day: presc.day,
-          time: presc.set_time
+          time: presc.set_time,
           notes: notes
         }
       }
