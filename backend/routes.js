@@ -169,7 +169,7 @@ router.get('/getMedSched', (req, res) => {
         }
       }
     })
-    res.json({success: true, result: daysObject})
+    res.json({success: true, result: dayObject})
    })
   .catch((error) => res.json({success: false, error: error}))
 })
