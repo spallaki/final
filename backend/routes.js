@@ -130,49 +130,49 @@ router.get('/getMedSched', (req, res) => {
   .then((result) => {
     var dayObject = {};
     result.rows.forEach((reminder) => {
-      if (reminder.day === 'Sunday') {
+      if (reminder.day === 'Monday') {
         if (dayObject['0']) {
           dayObject['0'].push({name: reminder.name, color: reminder.color})
         } else {
           dayObject['0'] = [{name: reminder.name, color: reminder.color}]
         }
       }
-      if (reminder.day === 'Monday') {
+      if (reminder.day === 'Tuesday') {
         if (dayObject['1']) {
           dayObject['1'].push({name: reminder.name, color: reminder.color})
         } else {
           dayObject['1'] = [{name: reminder.name, color: reminder.color}]
         }
       }
-      if (reminder.day === 'Tuesday') {
+      if (reminder.day === 'Wednesday') {
         if (dayObject['2']) {
           dayObject['2'].push({name: reminder.name, color: reminder.color})
         } else {
           dayObject['2'] = [{name: reminder.name, color: reminder.color}]
         }
       }
-      if (reminder.day === 'Wednesday') {
+      if (reminder.day === 'Thursday') {
         if (dayObject['3']) {
           dayObject['3'].push({name: reminder.name, color: reminder.color})
         } else {
           dayObject['3'] = [{name: reminder.name, color: reminder.color}]
         }
       }
-      if (reminder.day === 'Thursday') {
+      if (reminder.day === 'Friday') {
         if (dayObject['4']) {
           dayObject['4'].push({name: reminder.name, color: reminder.color})
         } else {
           dayObject['4'] = [{name: reminder.name, color: reminder.color}]
         }
       }
-      if (reminder.day === 'Friday') {
+      if (reminder.day === 'Saturday') {
         if (dayObject['5']) {
           dayObject['5'].push({name: reminder.name, color: reminder.color})
         } else {
           dayObject['5'] = [{name: reminder.name, color: reminder.color}]
         }
       }
-      if (reminder.day === 'Saturday') {
+      if (reminder.day === 'Sunday') {
         if (dayObject['6']) {
           dayObject['6'].push({name: reminder.name, color: reminder.color})
         } else {
