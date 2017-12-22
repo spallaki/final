@@ -3,6 +3,7 @@ const router = express.Router();
 
 module.exports = function(db) {
 
+var colors = ['#EBADAD', '#ADD6#B', '#D3B8E0', '#FFEE99', '#B3E085']
 // router.get('/', (req, res) => {
 //   res.sendFile(__dirname + '/public/index.html'); // For React/Redux
 // });
@@ -125,7 +126,7 @@ router.get('/getMedSched', (req, res) => {
         if (dayObject['0']) {
           dayObject['0'].push(reminder.name)
         } else {
-          dayObject['0'] = [reminder.name]
+          dayObject['0'] = [{name: reminder.name, color: ]
         }
       }
       if (reminder.day === 'Monday') {
