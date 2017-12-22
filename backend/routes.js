@@ -109,6 +109,18 @@ router.post('/getAllRx', (req, res) => {
   // console.log(req.user)
 });
 
+router.get('/getMedSched', (req, res) => {
+   db.query(`SELECT
+     r.day, r.set_time, p.id "prescID", p.name, u.id "userID"
+     FROM reminders r
+     JOIN prescriptions p on r.fk_prescription_id = p.id
+     JOIN users u on u.id = p.fk_user_id
+     WHERE u.id = $1`, [req.user.id])
+})
+  .then((result) => {
+    console.log(result)
+  })
+  .catch((error) => {success: false, error: error})
 // router.post('/getRx/:id', (req, res) => {
 //   db.query(`SELECT
 //   *
