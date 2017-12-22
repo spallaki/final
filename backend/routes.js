@@ -56,7 +56,7 @@ router.post('/addNote', (req, res) => {
 
 router.post('/addReminder', (req, res) => {
   db.query(`INSERT INTO reminders (day, set_time, fk_prescription_id)
-  VALUES($1, $2, $3)`, [req.body.day, req.body.set_time, req.body.id])
+  VALUES($1, $2, $3)`, [req.body.day, req.body.time, req.body.id])
   .then((result) => res.json({success: true}))
   .catch((error) => res.json({success: false, error: error}))
 });
@@ -64,7 +64,7 @@ router.post('/addReminder', (req, res) => {
 router.post('/getAllRx', (req, res) => {
   db.query(`SELECT
     p.id, p.name, p.physician, p.dosage, p.quantity, p.type, p.rx_number, p.refills, p.received, p.expiration_date,
-    p.pharmacy, p.pharmacy_phone, n.createdAt, n.noteBody
+    p.pharmacy, p.pharmacy_phone, n.createdAt, n.noteBody, r.day, r.set_time
     FROM prescriptions p
     LEFT JOIN notes n ON (p.id = n.fk_prescription_id)
     LEFT JOIN reminders r ON (p.id = r.fk_prescription_id)
