@@ -4,6 +4,7 @@ const router = express.Router();
 module.exports = function(db) {
 
 var colors = ['#EBADAD', '#ADD6#B', '#D3B8E0', '#FFEE99', '#B3E085']
+var colorIndex = 0;
 // router.get('/', (req, res) => {
 //   res.sendFile(__dirname + '/public/index.html'); // For React/Redux
 // });
@@ -25,10 +26,13 @@ router.post('/addRx', (req, res) => {
   // var physician = req.body.physician.charAt(0).toUpperCase() + req.body.name.slice(1);
   // var received = req.body.received || null;
   // var expiration_date = req.body.expiration_date || null;
+  var color = colors[colorIndex];
+  colorIndex = (colorIndex + 1) % colors.length;
+
   db.query(`INSERT INTO prescriptions
-  (name, physician, dosage, quantity, type, rx_number, refills, received, expiration_date, pharmacy, pharmacy_phone, fk_user_id)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
-  [prescriptionName, req.body.physician, req.body.dosage, req.body.quantity, req.body.type, req.body.rx_number, req.body.refills, req.body.received, req.body.expiration_date, req.body.pharmacy, req.body.pharmacy_phone, req.user.id])
+  (name, physician, dosage, quantity, type, rx_number, refills, received, expiration_date, pharmacy, pharmacy_phone, color, fk_user_id)
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+  [prescriptionName, req.body.physician, req.body.dosage, req.body.quantity, req.body.type, req.body.rx_number, req.body.refills, req.body.received, req.body.expiration_date, req.body.pharmacy, req.body.pharmacy_phone, color, req.user.id])
   .then((result) => res.json({success: true}))
   .catch((error) => {
     console.log("the error here", error);
