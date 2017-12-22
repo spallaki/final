@@ -3,7 +3,7 @@ const router = express.Router();
 
 module.exports = function(db) {
 
-var colors = ['#EBADAD', '#ADD6#B', '#D3B8E0', '#FFEE99', '#B3E085']
+var colors = ['#EBADAD', '#ADD6EB', '#D3B8E0', '#FFEE99', '#B3E085']
 var colorIndex = 0;
 // router.get('/', (req, res) => {
 //   res.sendFile(__dirname + '/public/index.html'); // For React/Redux
