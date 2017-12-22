@@ -60,10 +60,14 @@ router.post('/addNote', (req, res) => {
 });
 
 router.post('/addReminder', (req, res) => {
+  console.log('addReminder', req.body.day, req.body.set_time, req.body.id);
   db.query(`INSERT INTO reminders (day, set_time, fk_prescription_id)
   VALUES($1, $2, $3)`, [req.body.day, req.body.set_time, req.body.id])
   .then((result) => res.json({success: true}))
-  .catch((error) => res.json({success: false, error: error}))
+  .catch((error) => {
+    console.log('error is here', error)
+    res.json({success: false, error: error})
+  })
 });
 
 router.post('/getAllRx', (req, res) => {
