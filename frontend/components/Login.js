@@ -119,7 +119,7 @@ class Login extends React.Component {
           </TouchableOpacity>
         </FadeIn>
 
-        <Text style={styles.title}>Rx Tracker</Text>
+        <Text style={styles.title}>Rx Buddy</Text>
         <Text style={styles.desc, { fontFamily: 'HelveticaNeue-Light', fontSize: 17, color: 'white', top: 60, padding: 20}}>
           The one-stop-shop for keeping track of
           <Text style={{fontStyle: 'italic'}}> ALL<Text style={{fontStyle: 'normal'}}> your prescriptions</Text></Text>

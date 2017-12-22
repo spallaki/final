@@ -235,12 +235,12 @@ class Med extends React.Component {
 
   combined3() {
     // console.log(this.props.navigation.state.params.prescription.day, this.props.navigations.state.params.prescription.time)
-    if (this.state.weekday && this.state.time) {
-      this.updateReminder();
+    if ((!this.props.navigation.state.params.prescription.day && !this.props.navigation.state.params.prescription.time) || (this.props.navigation.state.params.prescription.day === null && this.props.navigation.state.params.prescription.time === null))  {
+      this.addReminder();
       this._remhideModal();
       this.setNotification();
     } else {
-      this.addReminder();
+      this.updateReminder();
       this._remhideModal();
       this.setNotification();
   }
@@ -511,9 +511,15 @@ class Med extends React.Component {
                       <Text>EDIT</Text>
                     </TouchableOpacity>
                       <ScrollView style={{color: 'white', fontFamily: 'HelveticaNeue-Light', fontSize: 20, alignSelf: 'flex-start', paddingLeft: 30, top: 50, position: 'absolute', maxHeight: 90, width: 320}}>
-                        <Text>Take 2</Text>
-                        <Text>{this.state.weekday}</Text>
-                        <Text>{this.state.time}</Text>
+                        <Text>
+                          <Text style={{fontWeight: 'bold'}}>Take: </Text>2
+                        </Text>
+                        <Text>
+                          <Text style={{fontWeight: 'bold'}}>On: </Text>{this.state.weekday}
+                        </Text>
+                        <Text>
+                          <Text style={{fontWeight: 'bold'}}>At: </Text>{this.state.time}
+                        </Text>
 
                       </ScrollView>
 
