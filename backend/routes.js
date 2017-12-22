@@ -247,7 +247,7 @@ router.post('/updateNote', (req, res) => {
 router.post('/updateReminder', (req, res) => {
   db.query(`UPDATE reminders
   SET day = $1, set_time = $2
-  WHERE id = $3`, [req.body.day, req.body.set_time, req.body.id])
+  WHERE fk_prescription_id = $3`, [req.body.day, req.body.set_time, req.body.id])
   .then((result) => res.json({success: true, result: result}))
   .catch((error) => res.json({success: false, error: error}))
 })
