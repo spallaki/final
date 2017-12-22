@@ -52,7 +52,7 @@ export default class PillCard extends React.Component {
 
   toPill = (prescription) => {
     console.log('prescription from getting all rx', prescription)
-    this.props.navigation.navigate('Med', {prescription: prescription});
+    this.props.navigation.navigate('Med',  {prescription: prescription});
   }
 
   componentDidMount() {

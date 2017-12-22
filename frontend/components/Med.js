@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   AsyncStorage,
   StyleSheet,
@@ -18,29 +18,18 @@ import { Container, Drawer, Form, Item, Input, Label, Button } from 'native-base
 import Geocoder from 'react-native-geocoding';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Modal from 'react-native-modal';
-import { Constants } from 'expo';
+import { Constants, Notifications, Permissions } from 'expo';
 import { Header } from 'react-native-elements';
 import axios from 'axios';
 import BackHeader from '../components/BackHeader.js';
 import Sidebar from './Sidebar';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import SimplePicker from 'react-native-simple-picker';
 
 const PAGE_WIDTH = Dimensions.get('window').width;
 const PAGE_HEIGHT = Dimensions.get('window').height;
 
-
-
-// getFromLocation = () => {
-//   Geocoder.setApiKey('AIzaSyBpBbtaKx4H35awztPfcEAZiA1tmCcNPGI'); // use a valid API key
-//   Geocoder.getFromLocation("51 Kings Road Canton MA 02021").then(
-//     json => {
-//       var location = json.results[0].geometry.location;
-//         alert(location.lat + ", " + location.lng);
-//       },
-//       error => {
-//         alert(error);
-//       }
-//     );
-// }
+const options = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 
 class Med extends React.Component {
@@ -52,12 +41,16 @@ class Med extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: '',
       current: [],
-      isModalVisible: false,
+      text: '',
+      time: this.props.navigation.state.params.prescription.time,
       saveNotes: '',
+      weekday: this.props.navigation.state.params.prescription.day,
       rxIsModalOpen: false,
       remisModalOpen: false,
+      isModalVisible: false,
+      isDateTimePickerVisible: false,
+      isDayPickerVisible: false,
       physician: this.props.navigation.state.params.prescription.physician,
       dosage: this.props.navigation.state.params.prescription.dosage,
       quantity: this.props.navigation.state.params.prescription.quantity,
@@ -68,8 +61,8 @@ class Med extends React.Component {
       expiration_date: this.props.navigation.state.params.prescription.expiration_date,
       pharmacy: this.props.navigation.state.params.prescription.pharmacy,
       pharmacy_phone: this.props.navigation.state.params.prescription.pharmacy_phone,
-      set_time: this.props.navigation.state.params.prescription.set_time,
-      day: this.props.navigation.state.params.prescription.day
+      // set_time: this.props.navigation.state.params.prescription.set_time,
+      // day: this.props.navigation.state.params.prescription.day,
   }
 }
 
@@ -107,6 +100,62 @@ class Med extends React.Component {
     this.setState({ remIsModalOpen: false })
   }
 
+
+  stdTime(t) {
+    let current = new Date(t);
+    let setTime = current.toTimeString().split(' ')[0].split(':');
+
+    var hours = Number(setTime[0]);
+    var minutes = Number(setTime[1]);
+    var seconds = Number(setTime[2]);
+
+    var timeValue;
+
+    if (hours > 0 && hours <= 12) {
+      timeValue= "" + hours;
+    } else if (hours > 12) {
+        timeValue= "" + (hours - 12);
+      }
+      else if (hours == 0) {
+        timeValue= "12";
+      }
+
+    timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+    // timeValue += (seconds < 10) ? ":0" + seconds : ":" + seconds;  // get seconds
+    timeValue += (hours >= 12) ? " PM" : " AM";  // get AM/PM
+    return timeValue;
+  }
+
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+  _showDayPicker = () => this.setState({ isDayPickerVisible: true });
+
+  _hideDayPicker = () => this.setState({ isDayPickerVisible: false });
+
+  _handleDatePicked = (date) => {
+    // this.setState({date: date});
+    console.log('A date has been picked', date);
+    this._hideDateTimePicker();
+    var setTime = this.stdTime(date);
+    console.log('setTime', setTime);
+    this.setState({time: setTime})
+  };
+
+  setNotification() {
+  let t = new Date();
+  t.setSeconds(t.getSeconds() + 5);
+  const localNotification = {
+      title: 'RXTracker REMINDER',
+      body: 'Take your ' + this.props.navigation.state.params.prescription.name,
+  };
+  // console.log('local notification', localNotification)
+  const schedulingOptions = {
+      time: t
+  };
+    Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
+  }
 
   saveNotes() {
     // console.log('this.state.params presc', this.props.navigation.state.params.prescription)
@@ -151,10 +200,11 @@ class Med extends React.Component {
 
 //REMINDERS ROUTE
   addReminder() {
+    console.log('add');
     axios.post('https://agile-forest-10594.herokuapp.com/addReminder', {
       id: this.props.navigation.state.params.prescription.id,
-      day: this.state.day,
-      set_time: this.state.set_time
+      day: this.state.weekday,
+      set_time: this.state.time
     })
     .then((response) => {
       console.log('reminder', response);
@@ -166,12 +216,48 @@ class Med extends React.Component {
     })
   }
 
-  combined2() {
-    this.addReminder();
-    this._remhideModal();
+  updateReminder() {
+    console.log('update');
+    axios.post('https://agile-forest-10594.herokuapp.com/updateReminder', {
+      id: this.props.navigation.state.params.prescription.id,
+      day: this.state.weekday,
+      set_time: this.state.time
+    })
+    .then((response) => {
+      console.log('update reminder', response);
+      // this.setState({reminders: response.data})
+    })
+    .catch((error) => {
+
+      console.log('error', error)
+    })
   }
 
+  combined3() {
+    // console.log(this.props.navigation.state.params.prescription.day, this.props.navigations.state.params.prescription.time)
+    if (this.state.weekday && this.state.time) {
+      this.updateReminder();
+      this._remhideModal();
+      this.setNotification();
+    } else {
+      this.addReminder();
+      this._remhideModal();
+      this.setNotification();
+  }
+}
+
+  componentDidMount() {
+    console.log('componentDidMount Date', this.props.name);
+  }
+  async componentDidMount() {
+    let {result} = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (Constants.isDevice && result.status === 'granted') {
+      console.log('Notification permissions granted.')
+    }
+  };
+
   render() {
+    console.log('prescription props', this.props.navigation.state.params.prescription);
     let { text } = this.state;
     return (
       <View style={styles.container}>
@@ -238,27 +324,60 @@ class Med extends React.Component {
                             </Text>
                               <ScrollView contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}>
 
-                                  <Text style={{fontWeight: 'bold', paddingRight: 20}}>Day(s):
+                                {/* Day of the week picker vv */}
+                              <TouchableOpacity onPress={() => {this.refs.picker.show()}} style={{ top: 40 }}>
+                                <View style={{justifyContent: 'center', alignItems: 'center', width: 160, height: 35, backgroundColor: 'lightgray', borderRadius: 5}} >
+                                  <Text>
+                                    Select Day</Text>
+                                </View>
+
+                                <SimplePicker
+                                  ref={'picker'}
+                                  // visible={this.state.isDayPickerVisible}
+                                  options={options}
+
+                                  onSubmit={(option) => {this.setState({weekday: option})}}
+                                />
+                              </TouchableOpacity>
+
+                              {/* DateTimePicker vv */}
+                              <TouchableOpacity onPress={this._showDateTimePicker} style={{ top: 60 }}>
+                                <View style={{justifyContent: 'center', alignItems: 'center', width: 160, height: 35, backgroundColor: 'lightgray', borderRadius: 5}}>
+                                  <Text>Select Time</Text>
+                                </View>
+                              <DateTimePicker
+                                mode={'time'}
+                                isVisible={this.state.isDateTimePickerVisible}
+                                onConfirm={this._handleDatePicked}
+                                onCancel={this._hideDateTimePicker}
+                                // name={this.props.navigation.state.params.prescription.name}
+                              />
+                            </TouchableOpacity>
+
+                                  <Text style={{fontWeight: 'bold', paddingRight: 20, top: 100}}>Day(s):
                                     <TextInput
                                     style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
-                                    defaultValue={this.state.day}
-                                    onChangeText={(text) => this.setState({day: text})}
+                                    defaultValue={this.state.weekday}
+                                    // onChangeText={(text) => this.setState({weekday: text})}
                                     >
                                     </TextInput>
                                   </Text>
 
-                                  <Text style={{fontWeight: 'bold', paddingRight: 20}}>Time:
+                                  <Text style={{fontWeight: 'bold', paddingRight: 20, top: 120}}>Time:
                                     <TextInput
                                       style={{fontSize: 16, borderBottomWidth: 0.5, borderBottomColor: 'black', width: PAGE_WIDTH / 2, height: 35, paddingLeft: 5}}
-                                      defaultValue={this.state.set_time}
-                                      onChangeText={(text) => this.setState({set_time: text})}
+                                      defaultValue={this.state.time}
+                                      // onChangeText={(text) => this.setState({set_time: text})}
                                       >
+                                        {/* <Text>
+                                          {this.state.time}
+                                        </Text> */}
                                     </TextInput>
                                   </Text>
 
                                   <Button
-                                    onPress={() => this.combined2()}
-                                    style={{justifyContent: 'center', alignSelf: 'center', width: 60}}
+                                    onPress={() => this.combined3()}
+                                    style={{justifyContent: 'center', alignSelf: 'center', width: 60, top: 140}}
                                     >
                                     <Text style={{color: 'white', justifyContent: 'center', alignSelf: 'center'}}>Save</Text>
                                   </Button>
@@ -392,12 +511,10 @@ class Med extends React.Component {
                       <Text>EDIT</Text>
                     </TouchableOpacity>
                       <ScrollView style={{color: 'white', fontFamily: 'HelveticaNeue-Light', fontSize: 20, alignSelf: 'flex-start', paddingLeft: 30, top: 50, position: 'absolute', maxHeight: 90, width: 320}}>
-                        <Text>Every M, W, F</Text>
-                        <Text>9:00 am</Text>
-                        <Text>{this.props.navigation.state.params.prescription.rx_number}</Text>
                         <Text>Take 2</Text>
-                        <Text>Take 2</Text>
-                        <Text>Take 2</Text>
+                        <Text>{this.state.weekday}</Text>
+                        <Text>{this.state.time}</Text>
+
                       </ScrollView>
 
                     <Text style={{color: '#4CC5F8', fontFamily: 'HelveticaNeue-Light', fontSize: 30, alignSelf: 'flex-start', paddingLeft: 20,
