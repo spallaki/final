@@ -98,6 +98,8 @@ router.post('/getAllRx', (req, res) => {
           expiration_date: presc.expiration_date,
           pharmacy: presc.pharmacy,
           pharmacy_phone: presc.pharmacy_phone,
+          day: presc.day,
+          time: presc.set_time
           notes: notes
         }
       }
