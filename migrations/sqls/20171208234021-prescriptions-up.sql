@@ -8,9 +8,10 @@ CREATE TABLE prescriptions (
   type VARCHAR,
   rx_number VARCHAR,
   refills VARCHAR,
-  received DATE,
-  expiration_date DATE,
+  received VARCHAR,
+  expiration_date VARCHAR,
   pharmacy VARCHAR,
   pharmacy_phone VARCHAR,
+  color VARCHAR,
   fk_user_id INT NOT NULL
 );
