@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, StyleSheet, View, Image, AsyncStorage } from 'react-native';
-import ProfileImage from './ProfileImage';
+// import ProfileImage from './ProfileImage';
 
 export default class Sidebar extends React.Component {
   static navigationOptions = {
@@ -71,9 +71,9 @@ settings() {
   this.props.navigation.navigate('Settings')
 }
 
-profile() {
-  this.props.navigation.navigate('Profile')
-}
+// profile() {
+//   this.props.navigation.navigate('Profile')
+// }
 
 
   render() {
@@ -81,13 +81,13 @@ profile() {
     return (
       <View style={{flex: 1, backgroundColor: 'white', alignItems: 'center'}}>
         <Image
-          source={{ uri: this.state.image }}
+          source={require ('../../profile.jpg')}
           style={{height: 75, width: 75, marginTop: 30, borderRadius: 10}}
         />
-        <Button onPress={ () => {this.profile()} } title='Profile' color="#00adf5"/>
-        <Button onPress={ () => {this.settings()} } title='Settings' color="#00adf5"/>
         <Button onPress={ () => {this.calendar()} } title='Calendar' color="#00adf5"/>
         <Button onPress={ () => this.props.navigation.navigate('PillCard')} title='All Prescriptions' color="#00adf5"/>
+        <Button onPress={ () => {this.settings()} } title='Settings' color="#00adf5"/>
+        {/* <Button onPress={ () => {this.profile()} } title='Profile' color="#00adf5"/> */}
         {/* <Button title='Request Refill' color="#00adf5"/> */}
         <Button onPress={ () => this.logout() } title='Logout' color="#F0BC0F" />
       </View>
