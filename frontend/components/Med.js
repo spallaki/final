@@ -61,6 +61,7 @@ class Med extends React.Component {
       expiration_date: this.props.navigation.state.params.prescription.expiration_date,
       pharmacy: this.props.navigation.state.params.prescription.pharmacy,
       pharmacy_phone: this.props.navigation.state.params.prescription.pharmacy_phone,
+      color: this.props.navigation.state.params.prescription.color
       // set_time: this.props.navigation.state.params.prescription.set_time,
       // day: this.props.navigation.state.params.prescription.day,
   }
@@ -139,7 +140,6 @@ class Med extends React.Component {
     console.log('A date has been picked', date);
     this._hideDateTimePicker();
     var setTime = this.stdTime(date);
-    console.log('setTime', setTime);
     this.setState({time: setTime})
   };
 
@@ -147,7 +147,7 @@ class Med extends React.Component {
   let t = new Date();
   t.setSeconds(t.getSeconds() + 5);
   const localNotification = {
-      title: 'RXTracker REMINDER',
+      title: 'RX Buddy Reminder',
       body: 'Take your ' + this.props.navigation.state.params.prescription.name,
   };
   // console.log('local notification', localNotification)
@@ -201,6 +201,8 @@ class Med extends React.Component {
 //REMINDERS ROUTE
   addReminder() {
     console.log('add');
+    console.log('weekday', this.state.weekday);
+    console.log('time', this.state.time);
     axios.post('https://agile-forest-10594.herokuapp.com/addReminder', {
       id: this.props.navigation.state.params.prescription.id,
       day: this.state.weekday,
@@ -275,7 +277,7 @@ class Med extends React.Component {
               navigation={this.props.navigation}
           />
             <View>
-            <View style={styles.titlebox}>
+            <View style={styles.titlebox} navigation={this.props.navigation}>
               <Text style={{color: 'white', fontFamily: 'HelveticaNeue-Thin', fontSize: 48, top: 20}}>
                 {this.props.navigation.state.params.prescription.name}
               </Text>
@@ -336,7 +338,10 @@ class Med extends React.Component {
                                   // visible={this.state.isDayPickerVisible}
                                   options={options}
 
-                                  onSubmit={(option) => {this.setState({weekday: option})}}
+                                  onSubmit={(option) => {
+                                    this.setState({weekday: option})
+                                    }
+                                  }
                                 />
                               </TouchableOpacity>
 
@@ -621,7 +626,7 @@ const styles = StyleSheet.create({
     // top: 500
   },
   titlebox: {
-    backgroundColor: '#4CC5F8',
+    backgroundColor: '#42BAF4',
     borderColor: 'white',
     borderStyle: 'solid',
     borderRadius: 1,

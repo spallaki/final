@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet
 } from 'react-native';
+import axios from 'axios';
 import {Agenda} from 'react-native-calendars';
 // import moment from 'moment';
 // import type Moment from 'moment';
@@ -19,7 +20,8 @@ export default class Calendar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      drugSched: {0: [{name:'sundrug1', color: 'red'},{name: 'sundrug2', color: 'blue'}], 1: [{name: 'mondrug2', color: 'green'}]},
+      // drugSched: [{0: [{name:'sundrug1', color: 'red'},{name: 'sundrug2', color: 'blue'}], 1: [{name: 'mondrug2', color: 'green'}]}],
+      drugSched: [],
       items: {},
     };
   }
@@ -29,6 +31,15 @@ export default class Calendar extends React.Component {
   componentDidMount() {
     // /getMedSchedule
       //{0: [prec 1, presc2], 1: []}
+      axios.get('https://agile-forest-10594.herokuapp.com/getMedSched')
+      .then((response) => {
+        console.log('getMedSched response', response);
+        this.setState({drugSched: response.data.result})
+      })
+      .catch((error) => {
+
+        console.log('error in getMedSched', error)
+      })
   }
   renderItem(item) {
     console.log('renderitem item', item);
